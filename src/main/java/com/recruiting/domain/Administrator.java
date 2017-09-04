@@ -1,6 +1,5 @@
 package com.recruiting.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -14,8 +13,7 @@ import java.util.List;
 public class Administrator extends User implements Serializable {
 
     // region Instance Fields
-    @Column(name = "full_name")
-    private String name;
+
     // endregion
 
     // region Constructors
@@ -28,21 +26,12 @@ public class Administrator extends User implements Serializable {
             Boolean enabled,
             List<Authority> grantedAuthorities, Address address, String name) {
         super(username, password, enabled, grantedAuthorities, address);
-        this.name = name;
+        super.setName(name);
     }
 
     // endregion
 
     // region Getters and Setters
-
-    public String getFullName() {
-        return name;
-    }
-
-    public void setFullName(String name) {
-        this.name = name;
-    }
-
     // endregion
 
     // region Overrides
@@ -50,7 +39,7 @@ public class Administrator extends User implements Serializable {
     public String toString() {
         return "Candidate [" +
                 "id: " + id + "\t" +
-                "name: " + name + "\t" +
+                "name: " + super.getName() + "\t" +
                 "]";
     }
 

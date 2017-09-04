@@ -23,6 +23,16 @@ public class Conversation extends AbstractEntity implements Serializable {
     @OneToOne
     private Candidate candidate;
 
+
+//    @Where( clause = "user_type = 'CANDIDATE'")
+//    @OneToOne
+//    private User candidate;
+//
+//    @Where( clause = "user_type = 'COMPANY'")
+//    @OneToOne
+//    private User candidate;
+
+
     @OneToOne(cascade = CascadeType.ALL)
     private Interview interview;
 

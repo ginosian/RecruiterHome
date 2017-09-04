@@ -14,11 +14,12 @@ public abstract class AbstractEntity implements Serializable {
 
     // region Instance Fields
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     protected Long id;
 
     @Convert(converter = LocalDateTimeAttributeConverter.class)
+//    @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 

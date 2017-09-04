@@ -15,6 +15,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "user")
+//@Where( clause = "active = true" )
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class User extends AbstractEntity implements UserDetails {
 
@@ -23,6 +24,11 @@ public class User extends AbstractEntity implements UserDetails {
     @Email
     private String username;
 
+
+//    @ColumnTransformer(
+//            read = "decrypt( 'AES', '00', pswd  )",
+//            write = "encrypt('AES', '00', ?)"
+//    )
     @Convert(converter = CryptoConverter.class)
     @Column(name = "password")
     private String password;
@@ -50,6 +56,10 @@ public class User extends AbstractEntity implements UserDetails {
 
     @Column(insertable = false, updatable = false)
     private String dtype;
+
+//    @Column(name = "user_type")
+//    @Enumerated(EnumType.STRING)
+//    private UserType type;
 
     @ManyToMany
     private List<Authority> grantedAuthorities;

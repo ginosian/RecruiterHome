@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: opensymphony:ognl:2.6.11">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/opensymphony/ognl/2.6.11/c3f31f4a65461c44e6697bf29070e638bef09d8/ognl-2.6.11.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/opensymphony/ognl/2.6.11/12dfc2019d4ce5a30a48292f04f779074817bc1b/ognl-2.6.11-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ElasticSearchRecruiter/ElasticSearchRecruiter.iml" filepath="$PROJECT_DIR$/.idea/modules/ElasticSearchRecruiter/ElasticSearchRecruiter.iml" group="ElasticSearchRecruiter" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ElasticSearchRecruiter/ElasticSearchRecruiter_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ElasticSearchRecruiter/ElasticSearchRecruiter_main.iml" group="ElasticSearchRecruiter" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ElasticSearchRecruiter/ElasticSearchRecruiter_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ElasticSearchRecruiter/ElasticSearchRecruiter_test.iml" group="ElasticSearchRecruiter" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FinanaceManager.iml" filepath="$PROJECT_DIR$/.idea/modules/FinanaceManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FinanaceManager_main.iml" filepath="$PROJECT_DIR$/.idea/modules/FinanaceManager_main.iml" group="FinanaceManager" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FinanaceManager_test.iml" filepath="$PROJECT_DIR$/.idea/modules/FinanaceManager_test.iml" group="FinanaceManager" />
+    </modules>
+  </component>
+</project>

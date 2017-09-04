@@ -47,6 +47,15 @@ public class Candidate extends User implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Area> areas;
+
+
+//    @Generated( value = GenerationTime.ALWAYS )
+//    @Column(columnDefinition =
+//            "AS CONCAT(" +
+//                    "    COALESCE(firstName, ''), " +
+//                    "    COALESCE(' ' + lastName, ''), " +
+//                    ")")
+//    private String fullName;
     // endregion
 
     // region Constructors
