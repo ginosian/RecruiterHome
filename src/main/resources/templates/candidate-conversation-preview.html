@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<!--&lt;!&ndash;[if IE 8 ]>-->
+<!--<html class="ie ie8" lang="en"> <![endif]&ndash;&gt;-->
+<!--&lt;!&ndash;[if (gte IE 9)|!(IE)]>&lt;!&ndash;>-->
+<!--<html lang="en"> &lt;!&ndash;<![endif]&ndash;&gt;-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/home">
+<section layout:fragment="content" th:remove="tag">
+    <div class="container">
+        <!-- Blog Posts -->
+        <div class="eleven columns">
+            <div class="padding-right">
+                <div th:if="${initialConversation != null}">
+                    <form th:action="@{/candidate/messages/interview}"
+                          th:object="${initialConversation}" method="post" id="interviewForm" name="interviewForm">
+                        <input type="hidden" name="page"/>
+                        <input type="hidden" name="size"/>
+                        <section class="eleven columns">
+                            <ul>
+                                <li>
+                                    <div class="conversation-message recived-message">
+                                        <div class="message-content">
+                                            <div class="message-by"
+                                                 th:text="*{conversation.company.mainContact.name}"></div>
+                                            <div class="message-date"
+                                                 th:text="${#temporals.format(initialConversation.conversation.interview.companyMessage.createdAt, 'EEEE MM-dd-yyyy HH:mm')}">
+                                            </div>
+                                            <h4 class="message-title"
+                                                th:text="*{conversation.interview.companyMessage.title}"></h4>
+                                            <p th:text="*{conversation.interview.companyMessage.content}"></p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                            <div th:if="${!datesExpired}" class="widget">
+
+
+                                <div class="form-group">
+                                    <h5 class="control-label" id="choose">Choose interview date and time<span> *</span>
+                                    </h5>
+                                    <p th:each="error: ${#fields.errors('interviewDate')}" th:text="${error}"
+                                       style="font-size: 20; color: #FF1C19;">Validation error</p>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div class="main-radio">
+                                                    <input type="radio" id="interviewDate" th:checked="${true} ? 'checked' : ''"
+                                                           th:field="*{interviewDate}"
+                                                           th:value="${#temporals.format(conversation.interview.interviewDate, 'yyyy-MMMM-dd HH:mm')}"/>
+                                                    <label for="interviewDate"
+                                                           th:text="${#temporals.format(conversation.interview.interviewDate, 'EEEE MM-dd-yyyy HH:mm')}"></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="main-radio">
+                                                    <input type="radio" id="date2" th:field="*{interviewDate}"
+                                                           th:value="${#temporals.format(conversation.interview.interviewDateOptional1, 'yyyy-MMMM-dd HH:mm')}"/>
+                                                    <label for="date2"
+                                                           th:text="${#temporals.format(conversation.interview.interviewDateOptional1, 'EEEE MM-dd-yyyy HH:mm')}"></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="main-radio">
+                                                    <input type="radio" id="date4" th:field="*{interviewDate}"
+                                                           th:value="${#temporals.format(conversation.interview.interviewDateOptional2, 'yyyy-MMMM-dd HH:mm')}"/>
+                                                    <label for="date4"
+                                                           th:text="${#temporals.format(conversation.interview.interviewDateOptional2, 'EEEE MM-dd-yyyy HH:mm')}"></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    <input type="hidden" hidden="hidden"
+                                           th:field="*{conversation.id}"
+                                           th:value="${conversation.id}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Message: <span>*</span></label>
+                                    <p th:each="error: ${#fields.errors('conversation.interview.candidateResponse.content')}"
+                                       th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                                    <textarea cols="40" rows="3" id="messageContent"
+                                              th:field="*{conversation.interview.candidateResponse.content}"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <h5 class="control-label"> Accept or reject<span> *</span></h5>
+                                <p th:each="error: ${#fields.errors('interviewStatus')}" th:text="${error}"
+                                   style="font-size: 20; color: #FF1C19;">Validation error</p>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div class="main-radio">
+                                                <input type="radio" id="accept" th:field="*{interviewStatus}"
+                                                       th:value="*{accepted}"/>
+                                                <label for="accept">Accept</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="main-radio">
+                                                <input type="radio" id="reject" th:field="*{interviewStatus}"
+                                                       th:value="*{rejected}"/>
+                                                <label for="reject">Reject</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <button id="submit" type="submit" class="button big margin-top-5">
+                                SEND
+                            </button>
+                        </section>
+                    </form>
+                </div>
+                <form th:action="@{/candidate/messages/__${conversation.id}__}" th:object="${conversation}"
+                      method="get" id="conversationForm" name="conversationForm">
+                    <!-- Comments -->
+                    <section th:if="${pageWrapper.getItems().size() != 0}" class="eleven columns">
+                        <div th:if="*{interview.rejected || interview.accepted}">
+                            <h4>Conversation <span class="comments-amount"></span></h4>
+                            <ul class="converstion">
+                                <li th:each="message,rowStat : ${pageWrapper.page.content}">
+                                    <div th:if="${message.author.id == message.conversation.candidate.id}"
+                                         class="conversation-message send-message">
+                                        <div class="message-content">
+                                            <div class="message-by"
+                                                 th:text="${message.conversation.candidate.name}"></div>
+                                            <div class="message-date"
+                                                 th:text="${#temporals.format(message.createdAt, 'EEEE MM-dd-yyyy HH:mm')}">
+                                            </div>
+                                            <h4 class="message-title" th:text="${message.title}"></h4>
+                                            <p th:text="${message.content}"></p>
+                                        </div>
+                                    </div>
+                                    <div th:if="${message.author.id == message.conversation.company.id}"
+                                         class="conversation-message recived-message">
+                                        <div class="message-content">
+                                            <div class="message-by"
+                                                 th:text="${message.conversation.company.mainContact.name}"></div>
+                                            <div class="message-date"
+                                                 th:text="${#temporals.format(message.createdAt, 'EEEE MM-dd-yyyy HH:mm')}">
+                                            </div>
+                                            <h4 class="message-title" th:text="${message.title}"></h4>
+                                            <p th:text="${message.content}"></p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                            <div class="pagination-container">
+                                <nav class="pagination">
+                                    <ul th:if="${pageWrapper.getItems().size() != 0}">
+                                        <li th:class="${pageWrapper.hasPreviousPage}? '' : 'disabled'">
+                                            <a th:if="${not pageWrapper.hasPreviousPage}">«</a>
+                                            <a th:if="${pageWrapper.hasPreviousPage}"
+                                               th:href="'javascript:navigateForConversation(' + ${pageWrapper.number-1} + ',' + ${pageWrapper.size} + ')'">
+                                                «</a>
+                                        </li>
+                                        <li th:each="item : ${pageWrapper.items}"
+                                            th:class="${item.current}? 'active' : ''">
+                                            <a class="current-page" th:if="${item.current}"
+                                               th:text="${item.number}">1</a>
+                                            <a th:if="${not item.current}"
+                                               th:href="'javascript:navigateForConversation(' + ${item.number} + ',' + ${pageWrapper.size} + ')'">
+                                                <span th:text="${item.number}">1</span></a>
+                                        </li>
+                                        <li th:class="${pageWrapper.hasNextPage}? '' : 'disabled'">
+                                            <a th:if="${not pageWrapper.hasNextPage}">»</a>
+                                            <a th:if="${pageWrapper.hasNextPage}"
+                                               th:href="'javascript:navigateForConversation(' + ${pageWrapper.number+1} + ',' + ${pageWrapper.size} + ')'">»</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <nav class="pagination-next-prev" th:if="${pageWrapper.getItems().size() != 0}">
+                                    <ul>
+                                        <li th:class="${pageWrapper.firstPage} ? 'disabled' : ''">
+                                            <a class="prev" th:if="${pageWrapper.firstPage}">First</a>
+                                            <a class="prev" th:if="${not pageWrapper.firstPage}"
+                                               th:href="'javascript:navigateForConversation(' + 1 + ',' + ${pageWrapper.size} + ')'">
+                                                Previous</a>
+                                        </li>
+                                        <li th:class="${pageWrapper.lastPage}? 'disabled' : ''">
+                                            <a class="next" th:if="${pageWrapper.lastPage}">Last</a>
+                                            <a class="next" th:if="${not pageWrapper.lastPage}"
+                                               th:href="'javascript:navigateForConversation(' + ${pageWrapper.totalPages} + ',' + ${pageWrapper.size} + ')'">
+                                                Next</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </section>
+                </form>
+                <div class="clearfix"></div>
+                <div class="margin-top-35"></div>
+                <div th:if="${conversation.interview.rejected || conversation.interview.accepted}">
+                    <!-- Add Message -->
+                    <h4 class="comment">Send Message</h4>
+                    <div class="margin-top-20"></div>
+                    <!-- Add Message Form -->
+                    <form th:action="@{/candidate/messages/send}" th:object="${message}" method="post" id="sendMessage"
+                          class="sendMessage">
+                        <div class="form-group">
+                            <label class="control-label" for="title">Title: <span> *</span> </label>
+                            <input id="title" type="text" th:field="*{title}"/>
+                            <p th:each="error: ${#fields.errors('title')}" th:text="${error}"
+                               style="font-size: 20; color: #FF1C19;">Validation error</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Message: <span> *</span></label>
+                            <textarea id="content" cols="40" rows="3" th:field="*{content}"></textarea>
+                            <p th:each="error: ${#fields.errors('content')}" th:text="${error}"
+                               style="font-size: 20; color: #FF1C19;">Validation error</p>
+                        </div>
+                        <div>
+                            <input type="hidden" hidden="hidden" th:field="*{conversation.id}"
+                                   th:value="__${conversation.id}__"/>
+                        </div>
+                        <button type="submit" class="button color">SEND</button>
+                        <div class="clearfix"></div>
+                        <div class="margin-bottom-20"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Blog Posts / End -->
+    </div>
+</section>
+<!-- Content
+================================================== -->
+<th:block layout:fragment="script">
+    <script>
+        var navigateForConversation = function (page, size) {
+            debugger;
+            var pageValue = parseInt(page);
+            var sizeValue = parseInt(size);
+            document.conversationForm.page.value = pageValue;
+            document.conversationForm.size.value = sizeValue;
+            document.conversationForm.submit();
+        }
+
+
+        $(document).ready(function () {
+
+            $('#interviewForm').validate({
+                submitHandler: function(form) {
+                    $(form).submit();
+                    return false;
+                },
+                invalidHandler: function() {
+                }
+            });
+
+            $('#title').rules("add", {
+                required: true,
+                normalizer: function(value) {
+                    return $.trim(value);
+                },
+                messages: {
+                    required: "Message is required",
+                }
+            });
+            $('#interviewStatus').rules("add", {
+                required: true,
+                messages: {
+                    required: "Interview status is required",
+                }
+            });
+
+            $('#sendMessage').validate({
+                submitHandler: function(form) {
+                    $(form).submit();
+                    return false;
+                },
+                invalidHandler: function() {
+                }
+            });
+
+            $('#title').rules("add", {
+                required: true,
+                minlength: 15,
+                maxlength: 100,
+                normalizer: function(value) {
+                    return $.trim(value);
+                },
+                messages: {
+                    required: "Title is required",
+                    minlength: "At least 3 letters are required",
+                    maxlength: "Maximum text length is 100 symbols."
+                }
+            });
+            $('#content').rules("add", {
+                required: true,
+                minlength: 15,
+                maxlength: 3000,
+                normalizer: function(value) {
+                    return $.trim(value);
+                },
+                messages: {
+                    required: "Message content is required",
+                    minlength: "At least 3 letters are required",
+                    maxlength: "Maximum text length is 3000 symbols."
+                }
+            });
+        });
+
+
+        $(document).ready(function () {
+
+            $('#sendMessage').validate({
+                submitHandler: function(form) {
+                    $(form).submit();
+                    return false;
+                },
+                invalidHandler: function() {
+                }
+            });
+
+            $('#title').rules("add", {
+                required: true,
+                minlength: 15,
+                maxlength: 100,
+                normalizer: function(value) {
+                    return $.trim(value);
+                },
+                messages: {
+                    required: "Title is required",
+                    minlength: "At least 3 letters are required",
+                    maxlength: "Maximum text length is 100 symbols."
+                }
+            });
+            $('#content').rules("add", {
+                required: true,
+                minlength: 15,
+                maxlength: 3000,
+                normalizer: function(value) {
+                    return $.trim(value);
+                },
+                messages: {
+                    required: "Message content is required",
+                    minlength: "At least 3 letters are required",
+                    maxlength: "Maximum text length is 3000 symbols."
+                }
+            });
+        });
+    </script>
+</th:block>
+
+</html>

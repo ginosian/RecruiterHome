@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/home">
+
+
+<!--<section layout:fragment="top-banner" th:remove="tag"></section>-->
+
+<section layout:fragment="content" th:remove="tag">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+    <!-- Titlebar
+    ================================================== -->
+    <div id="titlebar">
+        <div class="container">
+            <div class="ten columns">
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li>You are here:</li>
+                        <li th:if="${#authentication != null and #authorization.expression('hasRole(''ROLE_COMPANY'')')}"><a th:href="@{/company}">Home</a></li>
+                        <li th:if="${#authentication != null and #authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a th:href="@{/admin/companies}">Home</a></li>
+                        <li th:if="${!company.signedInUser}">Sign Up - Final Step</li>
+                        <li th:if="${company.signedInUser}">Edit Account - Final Step</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Content
+    ================================================== -->
+
+
+    <!-- Container -->
+    <div class="container" id="content">
+
+        <!-- Submit Page -->
+        <div class="sixteen columns">
+            <div class="submit-page">
+                <form
+                        th:action="${flowExecutionUrl}"
+                        th:object="${company}"
+                        method="post" class="register" id="final">
+
+
+                    <div th:if="*{additionalAddressesDecorator != null}">
+                        <!-- Experience  -->
+                        <div >
+                            <h5>Your locations</h5>
+
+                            <p th:each="error: ${#fields.errors('index')}"
+                               th:text="${error}"
+                               style="font-size: 20; color: #FF1C19;">Validation error</p>
+                            <p th:each="error: ${#fields.errors('addressForError.state')}"
+                               th:text="${error}"
+                               style="font-size: 20; color: #FF1C19;">Validation error</p>
+                            <p th:each="error: ${#fields.errors('addressForError.city')}"
+                               th:text="${error}"
+                               style="font-size: 20; color: #FF1C19;">Validation error</p>
+                            <p th:each="error: ${#fields.errors('addressForError.address')}"
+                               th:text="${error}"
+                               style="font-size: 20; color: #FF1C19;">Validation error</p>
+                            <p th:each="error: ${#fields.errors('addressForError.zipCode')}"
+                               th:text="${error}"
+                               style="font-size: 20; color: #FF1C19;">Validation error</p>
+
+                            <div th:each="address,rowStat : *{additionalAddressesDecorator}">
+                                <div th:if="*{additionalAddressesDecorator[__${rowStat.index}__] != null}">
+                                    <input type="hidden" name="index" id="index" th:field="*{index}"
+                                           th:value="${rowStat.index}"/>
+
+                                    <!-- Add more locations -->
+                                    <div class="form boxed">
+                                        <a id="deleteAddress" type="submit" name="_eventId_deleteAddress"
+                                           class="close-form button"
+                                           th:href="@{${flowExecutionUrl}(_eventId='deleteAddress')}">
+                                            <i class="fa fa-close"></i>
+                                        </a>
+                                        <!-- State -->
+                                        <div class="form  required-field">
+                                            <h5>State</h5>
+                                            <select th:field="*{additionalAddressesDecorator[__${rowStat.index}__].state}"
+                                                    id="state">
+                                                <option th:if="*{additionalAddressesDecorator[__${rowStat.index}__].state != null}"
+                                                        value="0"
+                                                        th:text="*{additionalAddressesDecorator[__${rowStat.index}__].state.title}"/>
+                                                <option th:each="state : ${states}"
+                                                        th:value="${state.getId()}"
+                                                        th:selected="${state}"
+                                                        th:text="${state.getTitle()}">
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <!-- City -->
+                                        <div class="form  required-field">
+                                            <h5>City</h5>
+                                            <input class="search-field" type="text"
+                                                   th:field="*{additionalAddressesDecorator[__${rowStat.index}__].city}"
+                                                   name="city" placeholder="City"/>
+                                        </div>
+
+                                        <!-- Address -->
+                                        <div class="form  required-field">
+                                            <h5>Address</h5>
+                                            <input class="search-field" type="text"
+                                                   th:field="*{additionalAddressesDecorator[__${rowStat.index}__].address}"
+                                                   name="address" placeholder="Address"/>
+                                        </div>
+
+                                        <!-- ZIP -->
+                                        <div class="form  required-field">
+                                            <h5>Zip Code</h5>
+                                            <input class="search-field" type="number" min="0"
+                                                   th:field="*{additionalAddressesDecorator[__${rowStat.index}__].zipCode}"
+                                                   name="zip" placeholder="ZIP Code"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Add Address  -->
+                    <div th:if="*{count &#60; 5}">
+                        <h5>Add locations <span>(optional)</span></h5>
+
+                        <input class="search-field" type="hidden"
+                               th:field="*{error}"/>
+
+                        <div class="form with-line">
+                            <div class="">
+                                <!-- Add more locations -->
+                                <div class="form boxed experience-box">
+                                    <!-- State -->
+                                    <div class="form  required-field">
+                                        <h5>State</h5>
+                                        <select th:field="*{additionalAddressPlaceholder.state}"
+                                                id="newstate">
+                                            <option value="0">Please select</option>
+                                            <option th:each="state : ${states}"
+                                                    th:value="${state.getId()}"
+                                                    th:selected="${state}"
+                                                    th:text="${state.getTitle()}">
+                                            </option>
+                                        </select>
+                                        <p th:each="error: ${#fields.errors('additionalAddressPlaceholder.state')}"
+                                           th:text="${error}"
+                                           style="font-size: 20; color: #FF1C19;">Validation error</p>
+                                    </div>
+
+                                    <!-- City -->
+                                    <div class="form  required-field">
+                                        <h5>City</h5>
+                                        <input class="search-field" type="text"
+                                               th:field="*{additionalAddressPlaceholder.city}"
+                                               name="city" placeholder="City"/>
+                                        <p th:each="error: ${#fields.errors('additionalAddressPlaceholder.city')}"
+                                           th:text="${error}"
+                                           style="font-size: 20; color: #FF1C19;">Validation error</p>
+                                    </div>
+
+                                    <!-- Address -->
+                                    <div class="form  required-field">
+                                        <h5>Address</h5>
+                                        <input class="search-field" type="text"
+                                               th:field="*{additionalAddressPlaceholder.address}"
+                                               name="address" placeholder="Address"/>
+                                        <p th:each="error: ${#fields.errors('additionalAddressPlaceholder.address')}"
+                                           th:text="${error}"
+                                           style="font-size: 20; color: #FF1C19;">Validation error</p>
+                                    </div>
+
+                                    <!-- ZIP -->
+                                    <div class="form  required-field">
+                                        <h5>Zip Code</h5>
+                                        <input class="search-field" type="number" min="0"
+                                               th:field="*{additionalAddressPlaceholder.zipCode}"
+                                               name="zip" placeholder="ZIP Code"/>
+                                        <p th:each="error: ${#fields.errors('additionalAddressPlaceholder.zipCode')}"
+                                           th:text="${error}"
+                                           style="font-size: 20; color: #FF1C19;">Validation error</p>
+                                    </div>
+                                </div>
+
+
+                                <button id="addAddress" type="submit" name="_eventId_addAddress"
+                                        class="button gray">
+                                    <i class="fa fa-plus-circle"></i> Save Location
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <button id="back" type="submit" name="_eventId_back" class="button big margin-top-5">
+                        <i class="fa fa-arrow-circle-left"></i> Back
+                    </button>
+
+                    <button id="preview" type="submit" name="_eventId_preview" class="button big margin-top-5">
+                        Preview <i class="fa fa-arrow-circle-right"></i>
+                    </button>
+
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+</html>
+
+
+

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/home">
+
+
+<!--<section layout:fragment="top-banner" th:remove="tag"></section>-->
+
+<section layout:fragment="content" th:remove="tag">
+
+    <!-- Titlebar
+    ================================================== -->
+    <div id="titlebar">
+        <div class="container">
+            <div class="ten columns">
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li>You are here:</li>
+                        <li th:if="${#authentication != null and #authorization.expression('hasRole(''ROLE_COMPANY'')')}"><a th:href="@{/company}">Home</a></li>
+                        <li th:if="${#authentication != null and #authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a th:href="@{/admin/companies}">Home</a></li>
+                        <li th:if="${!company.signedInUser}">Sign Up - Preview and Register</li>
+                        <li th:if="${company.signedInUser}">Edit Account - Preview and Update</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Content
+================================================== -->
+    <form
+            th:action="${flowExecutionUrl}"
+            th:object="${company}"
+            method="post" class="register">
+        <div class="container">
+
+
+            <!-- Recent Jobs -->
+            <div class="eleven columns">
+                <div class="padding-right">
+
+
+                    <!-- Company Info -->
+                    <div class="company-info">
+                        <div class="content">
+                            <h4 th:text="*{company.name}"></h4>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                </div>
+                <button id="back" type="submit" name="_eventId_back" class="button big margin-top-5">
+                    <i class="fa fa-arrow-circle-left"></i> BACK
+                </button>
+
+                <button id="register" th:if="*{!signedInUser}" type="submit" name="_eventId_register"
+                        class="button big margin-top-5">
+                    REGISTER <i class="fa fa-arrow-circle-right"></i>
+                </button>
+
+                <button id="update" th:if="*{signedInUser}" type="submit" name="_eventId_update"
+                        class="button big margin-top-5">
+                    UPDATE <i class="fa fa-arrow-circle-right"></i>
+                </button>
+
+                <a type="button" th:href="@{/registration}"
+                        class="button big margin-top-5">
+                    CANCEL
+                </a>
+            </div>
+
+
+            <!-- Widgets -->
+            <div class="five columns">
+
+                <!-- Sort by -->
+                <div class="widget">
+                    <h4>Overview</h4>
+
+                    <div class="job-overview">
+                        <ul>
+
+                            <li>
+                                <i class="fa ln ln-icon-Bank"></i>
+                                <div>
+                                    <strong>Industry:</strong>
+                                    <span th:text="*{company.industry.title}"></span>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-map-marker"></i>
+                                <div>
+                                    <strong>Head Office:</strong>
+                                    <span th:text="*{company.address.address}"></span>
+                                    <span th:text="*{company.address.city}"></span>
+                                    <span th:text="*{company.address.state.title}"></span>
+                                    <span th:text="*{company.address.zipCode}"></span>
+                                </div>
+                            </li>
+
+                            <li>
+                                <p th:if="*{additionalAddressesDecorator != null}">
+                                <p th:each="address,rowStat : *{additionalAddressesDecorator}">
+                                <p th:if="*{additionalAddressesDecorator[__${rowStat.index}__] != null}">
+                                    <i class="fa fa-map-marker"></i>
+                                <div>
+                                    <strong>
+                                        Office in:
+                                        <a th:text="*{additionalAddressesDecorator[__${rowStat.index}__].state.title}"></a>
+                                    </strong>
+
+                                </div>
+                                <div>
+                                    <span th:text="*{additionalAddressesDecorator[__${rowStat.index}__].address}"></span>
+                                    <span th:text="*{additionalAddressesDecorator[__${rowStat.index}__].city}"></span>
+                                    <span th:text="*{additionalAddressesDecorator[__${rowStat.index}__].zipCode}"></span>
+                                </div>
+
+                                </p>
+                                </p>
+                                </p>
+                            </li>
+
+                            <li>
+                                <i class="fa fa-user"></i>
+                                <div>
+                                    <strong>Contact person:</strong>
+                                    <span th:text="*{company.mainContact.name}"></span>
+                                </div>
+                                <i class="fa fa-phone"></i>
+                                <div>
+                                    <strong>Phone:</strong>
+                                    <span th:text="*{company.mainContact.phone}"></span>
+                                </div>
+                                <i class="fa fa-envelope"></i>
+                                <div>
+                                    <strong>Email:</strong>
+                                    <span th:text="*{company.mainContact.email}"></span>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Widgets / End -->
+
+
+        </div>
+    </form>
+
+</section>
+</html>
+
+

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/home">
+
+
+<!--<section layout:fragment="top-banner" th:remove="tag"></section>-->
+
+<section layout:fragment="content" th:remove="tag">
+
+    <!-- Content
+    ================================================== -->
+    <form
+            th:action="@{/company/edit-account}"
+            th:object="${company}"
+            method="post" class="register">
+        <div class="container">
+
+
+            <!-- Recent Jobs -->
+            <div class="eleven columns">
+                <div class="padding-right">
+
+                    <!-- Company Info -->
+                    <div class="company-info">
+                        <div class="content">
+                            <h4 th:text="*{name}"></h4>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+
+                </div>
+                <div th:if="${#authentication != null and #authorization.expression('hasRole(''ROLE_COMPANY'')')}">
+                    <div th:if="*{approved}">
+                        <button id="edit" type="submit" name="edit" class="button big margin-top-5">
+                            Edit<i class="fa fa-arrow-circle-right"></i>
+                        </button>
+                    </div>
+
+
+                    <div th:if="*{!approved}">
+                        <p style="color:red">Your account is not approved yet. You will receive a message as soon as it
+                            gets approved.
+                            For now just refresh this page and you will get approved.</p>
+                    </div>
+                </div>
+
+                <div th:if="${#authentication != null and #authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                    <a th:href="@{/admin/edit-company-account/__${company.id}__}"
+                            id="edit-admin"  name="edit-admin" class="button big margin-top-5">
+                        Edit<i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                    <div th:if="*{!approved}">
+                        <a th:href="@{/admin/approve_user/__${company.id}__}" id="approve-admin"  name="approve-admin" class="button big margin-top-5">
+                            Approve
+                        </a>
+                    </div>
+                    <div th:if="*{approved}">
+                        <a th:href="@{/admin/conversations/company/__${company.id}__}" id="conversations-admin"  name="approve-admin" class="button big margin-top-5">
+                            Show conversations<i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Widgets -->
+            <div class="five columns">
+
+                <!-- Sort by -->
+                <div class="widget">
+                    <h4>Overview</h4>
+
+                    <div class="job-overview">
+                        <ul>
+
+                            <li>
+                                <i class="fa ln ln-icon-Bank"></i>
+                                <div>
+                                    <strong>Industry:</strong>
+                                    <span th:text="*{industry.title}"></span>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-map-marker"></i>
+                                <div>
+                                    <strong>Head Office:</strong>
+                                    <span th:text="*{address.address}"></span>
+                                    <span th:text="*{address.city}"></span>
+                                    <span th:text="*{address.state.title}"></span>
+                                    <span th:text="*{address.zipCode}"></span>
+                                </div>
+                            </li>
+
+                            <li>
+                                <p th:if="*{addresses != null}">
+                                <p th:each="address,rowStat : *{addresses}">
+                                <p th:if="*{addresses[__${rowStat.index}__] != null}">
+                                    <i class="fa fa-map-marker"></i>
+                                <div>
+                                    <strong>
+                                        Office in:
+                                        <a th:text="*{addresses[__${rowStat.index}__].state.title}"></a>
+                                    </strong>
+
+                                </div>
+                                <div>
+                                    <span th:text="*{addresses[__${rowStat.index}__].address}"></span>
+                                    <span th:text="*{addresses[__${rowStat.index}__].city}"></span>
+                                    <span th:text="*{addresses[__${rowStat.index}__].zipCode}"></span>
+                                </div>
+
+                                </p>
+                                </p>
+                                </p>
+                            </li>
+
+                            <li>
+                                <i class="fa fa-user"></i>
+                                <div>
+                                    <strong>Contact person:</strong>
+                                    <span th:text="*{mainContact.name}"></span>
+                                </div>
+                                <i class="fa fa-phone"></i>
+                                <div>
+                                    <strong>Phone:</strong>
+                                    <span th:text="*{mainContact.phone}"></span>
+                                </div>
+                                <i class="fa fa-envelope"></i>
+                                <div>
+                                    <strong>Email:</strong>
+                                    <span th:text="*{mainContact.email}"></span>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Widgets / End -->
+
+
+        </div>
+    </form>
+
+</section>
+</html>
+
+

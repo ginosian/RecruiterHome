@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!--&lt;!&ndash;[if IE 8 ]>-->
+<!--<html class="ie ie8" lang="en"> <![endif]&ndash;&gt;-->
+<!--&lt;!&ndash;[if (gte IE 9)|!(IE)]>&lt;!&ndash;>-->
+<!--<html lang="en"> &lt;!&ndash;<![endif]&ndash;&gt;-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/home">
+
+<section layout:fragment="content" th:remove="tag">
+
+    <!-- Titlebar
+    ================================================== -->
+    <div id="titlebar">
+        <div class="container">
+            <div class="ten columns">
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li>You are here:</li>
+                        <li th:if="${#authentication != null and #authorization.expression('hasRole(''ROLE_CANDIDATE'')')}"><a th:href="@{/candidate}">Home</a></li>
+                        <li th:if="${#authentication != null and #authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a th:href="@{/admin/candidates}">Home</a></li>
+                        <li th:if="${!candidate.signedInUser}">Sign Up - Step One</li>
+                        <li th:if="${candidate.signedInUser}">Edit Account - Step One</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Content
+    ================================================== -->
+    <div class="container">
+
+        <!-- Submit Page -->
+        <div class="sixteen columns">
+            <div class="submit-page">
+
+                <form
+                        th:action="${flowExecutionUrl}"
+                        th:object="${candidate}"
+                        method="post" class="register" id="form">
+
+                    <!-- Email -->
+                    <div class="form  required-field">
+                        <h5>Your Email</h5>
+                        <input class="search-field" type="text"
+                               th:field="*{candidate.username}"
+                               name="email" placeholder="Email Address"/>
+                        <p th:each="error: ${#fields.errors('candidate.username')}"
+                           th:text="${error}"
+                           style="font-size: 20; color: #FF1C19;">Validation error</p>
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="form  required-field" th:if="*{!signedInUser}">
+                        <h5>Password</h5>
+                        <input class="search-field" type="password"
+                               th:field="*{candidate.password}"
+                               name="password1" placeholder="Password"/>
+                        <p th:each="error: ${#fields.errors('candidate.password')}"
+                           th:text="${error}"
+                           style="font-size: 20; color: #FF1C19;">Validation error</p>
+                    </div>
+
+                    <!-- New Password -->
+                    <div class="form  required-field" th:if="*{signedInUser}">
+                        <h5>Password</h5>
+                        <input class="search-field" type="password"
+                               th:field="*{newPassword}"
+                               name="password1" placeholder="Password"/>
+                        <p th:each="error: ${#fields.errors('newPassword')}"
+                           th:text="${error}"
+                           style="font-size: 20; color: #FF1C19;">Validation error</p>
+                    </div>
+
+                    <!-- Verify Password -->
+                    <div class="form  required-field">
+                        <h5>Repeat Password</h5>
+                        <input class="search-field" type="password"
+                               th:field="*{verifyPassword}"
+                               name="password2" placeholder="Repeat Password"/>
+                        <p th:each="error: ${#fields.errors('verifyPassword')}"
+                           th:text="${error}"
+                           style="font-size: 20; color: #FF1C19;">Validation error</p>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div th:if="*{!signedInUser}">
+                        <p class="form-row  required-field">
+
+                            <label for="agreed" class="rememberme">
+                                <input type="hidden" name="_agreed" th:value="${agreed}"/>
+                                <input name="agreed" type="checkbox" id="agreed"
+                                       th:checked="${agreed}"/> I agree to the <a th:href="@{/under-construction}"> Terms
+                                and Conditions</a>
+                            </label>
+                        </p>
+                        <p th:each="error: ${#fields.errors('agreed')}"
+                           th:text="${error}"
+                           style="font-size: 20; color: #FF1C19;">Validation error</p>
+                    </div>
+
+                    <button id="next" type="submit" name="_eventId_next" class="button big margin-top-5"> Next
+                        <i class="fa fa-arrow-circle-right"></i>
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+</html>
+

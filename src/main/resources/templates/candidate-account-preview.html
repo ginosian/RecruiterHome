@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/company">
+<section layout:fragment="content" th:remove="tag">
+    <!-- Titlebar
+================================================== -->
+    <div th:object="${conversation}">
+        <div id="titlebar" class="resume">
+            <div class="container">
+                <div class="ten columns">
+                    <div class="resume-titlebar">
+                        <div class="resumes-list-content">
+                            <h4 th:text="${name}"></h4>
+                            <div>
+                                <span class="icons"><i class="fa fa-map-marker"></i></span>
+                                <span class="icons" th:text="*{candidate.address.city}"></span>,
+                                <span class="icons" th:text="*{candidate.address.state.title}"></span>
+                                <spam class="icons" th:text="*{candidate.address.zipCode}" />
+                            </div>
+                            <div>
+                                <span class="icons"><i class="fa fa-money"></i></span>
+                                <span class="icons" th:text="*{'$' + __*{candidate.hourlyRate}__ + '/hour'}" />
+                            </div>
+                            <div th:if="*{candidate.skills != null}">
+                                <div th:each="skill,rowStat : *{candidate.skills}">
+                                    <div th:if="*{candidate.skills[__${rowStat.index}__] != null}">
+                                        <div class="skills">
+                                            <span th:text="*{candidate.skills[__${rowStat.index}__].skill.title}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <span><i class="ln ln-icon-Stopwatch"></i></span>
+                            <span>Available</span>:
+                            <span class="icons" th:text="*{candidate.timePeriod}"></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="six columns">
+                    <div class="two-buttons">
+                        <a href="#small-dialog" class="popup-with-zoom-anim button"><i class="fa fa-envelope"></i> Download resume</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Content
+        ================================================== -->
+        <div class="container">
+            <!-- Recent Jobs -->
+            <div class="eight columns" th:object="${conversation}">
+                <div class="padding-right"></div>
+                <div th:if="*{interview.id == null || interview.rejected}">
+                    <a href="#small-dialog" class="popup-with-zoom-anim button">ARRANGE INTERVIEW</a>
+                </div>
+                <p th:each="error: ${#fields.errors('interview.interviewDate')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                <p th:each="error: ${#fields.errors('interview.interviewDateOptional1')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                <p th:each="error: ${#fields.errors('interview.interviewDateOptional2')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                <p th:each="error: ${#fields.errors('interview.location')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                <p th:each="error: ${#fields.errors('interview.companyMessage.content')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                <div class="container">
+                    <!-- Recent Jobs -->
+                    <div class="eight columns">
+                        <div class="padding-right">
+                            <div th:if="*{interview.id != null &#38;&#38; !interview.accepted &#38;&#38; !interview.rejected}">
+                                <h3 class="margin-bottom-15">Interview appointed</h3>
+                                <div>
+                                    <h4 th:if="*{interview.candidateResponse == null}"> Requested interview date:</h4>
+                                    <h4 th:if="*{interview.candidateResponse != null}"> Interview appointed on:</h4>
+                                    <p class="margin-reset" th:text="*{#temporals.format(interview.interviewDate, 'EEEE MM-dd-yyyy HH:mm')}"></p>
+                                    <p class="clearfix"></p>
+                                </div>
+                                <div>
+                                    <h4>Interview location:</h4>
+                                    <p class="margin-reset" th:text="*{interview.location}"></p>
+                                    <p class="clearfix"></p>
+                                </div>
+                                <div th:if="*{interview.candidateResponse == null}">
+                                    <h4>Status</h4>
+                                    <p class="margin-reset">No response yet.</p>
+                                    <p class="clearfix"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="*{interview.id != null &#38;&#38; interview.accepted &#38;&#38; !interview.rejected}">
+                        <h4> Messaging history: </h4>
+                        <ul class="list-1">
+                            <li>
+                                <span class="icons" th:text="*{company.name}"></span>
+                                <div class="clearfix"></div>
+                                <span class="icons"><i class="ln ln-icon-Email"></i></span>
+                                <span class="icons" th:text="*{interview.companyMessage.content}"></span>
+                                <p class="clearfix"></p>
+                            </li>
+                            <li th:if="*{interview.candidateResponse != null}">
+                                <span class="icons" th:text="${name}"></span>
+                                <div class="clearfix"></div>
+                                <span class="icons"><i class="ln ln-icon-Email"></i></span>
+                                <span class="icons" th:text="*{interview.candidateResponse.content}"></span>
+                                <p class="clearfix"></p>
+                            </li>
+                        </ul>
+                        <div class="margin-top-20"></div>
+                        <div class="divider"></div>
+                        <a th:href="@{/company/messages/__*{id}__}" class="send">VIEW CONVERSATION</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Widgets -->
+            <div class="eight columns" th:object="${conversation.candidate}">
+                <h3 class="margin-bottom-20">Skills</h3>
+                <!-- Resume Table -->
+                <dl class="resume-table">
+                    <p th:if="*{skills != null}">
+                        <p th:each="skill,rowStat : *{skills}">
+                            <p th:if="*{skills[__${rowStat.index}__] != null}">
+                                <dd>
+                                    <p th:text="*{skills[__${rowStat.index}__].skill.title}"></p>
+                                    <small class="date">Experience</small>
+                                    <small class="date" th:text="*{skills[__${rowStat.index}__].experienceDuration}"></small>
+                                    <small class="date">years</small>
+                                </dd>
+                            </p>
+                        </p>
+                    </p>
+                </dl>
+                <h3 class="margin-bottom-20">Certifications</h3>
+                <!-- Resume Table -->
+                <dl class="resume-table">
+                    <p th:if="*{certifications != null}">
+                        <p th:each="soft,rowStat : *{certifications}">
+                            <p th:if="*{certifications[__${rowStat.index}__] != null}">
+                                <dd>
+                                    <p th:text="*{certifications[__${rowStat.index}__].title}"></p>
+                                </dd>
+                            </p>
+                        </p>
+                    </p>
+                </dl>
+            </div>
+        </div>
+        <!--</form>-->
+        <div id="small-dialog" class="zoom-anim-dialog mfp-hide apply-popup">
+            <div class="small-dialog-headline">
+                <h2>Interview Invitation</h2>
+            </div>
+            <div class="small-dialog-content">
+                <form th:action="@{/company/search/interview}" method="post" id="interviewForm">
+                    <div th:object="${conversation.interview}">
+                        <div class="form-group">
+                            <input th:field="*{interviewDate}" style="position: relative; z-index: 100000;" type="text" id="date" name="date" class="form-control date-input" placeholder="Date" tabindex="-1" />
+                        </div>
+                        <div class="form-group">
+                            <input th:field="*{interviewDateOptional1}" style="position: relative; z-index: 100000;" type="text" id="dateOptional1" name="dateOptional1" class="form-control date-input" placeholder="Additional date" tabindex="-1" />
+                        </div>
+                        <div class="form-group">
+                            <input th:field="*{interviewDateOptional2}" style="position: relative; z-index: 100000;" type="text" id="dateOptional2" name="dateOptional2" class="form-control date-input" placeholder="One more additional date" tabindex="-1" />
+                        </div>
+                        <div class="form-group">
+                            <input id="location" th:field="*{location}" class="form-control search-field" type="text" placeholder="Interview location" value="" />
+                        </div>
+                        <div class="form-group">
+                            <textarea th:field="*{companyMessage.content}" class="form-control WYSIWYG" name="content" cols="20" rows="3" id="content" spellcheck="true" placeholder="Message content"></textarea>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="hidden" hidden="hidden" th:field="*{company}" th:value="${conversation.company}" />
+                    </div>
+                    <div>
+                        <input type="hidden" hidden="hidden" th:field="*{candidate}" th:value="${conversation.candidate}" />
+                    </div>
+                    <div>
+                        <input type="hidden" hidden="hidden" th:field="*{interview.companyMessage.title}" th:value="${conversation.interview.companyMessage.title}" />
+                    </div>
+                    <div class="margin-top-20"></div>
+                    <div class="divider"></div>
+                    <button type="submit" class="send">SEND</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!--</section>-->
+<th:block layout:fragment="script">
+    <script>
+    $(document).ready(function() {
+        $('.date-input').datetimepicker({
+            dateFormat: "yy-MM-dd",
+            timeFormat: "HH:mm",
+            onSelect: function() {
+                $(this).datetimepicker("hide");
+            }
+        });
+
+        $('#interviewForm').validate({
+            submitHandler: function(form) {
+                $(form).submit();
+                return false;
+            },
+            invalidHandler: function() {
+                debugger;
+            }
+        });
+
+        $('#date').rules("add", {
+            required: true,
+            messages: {
+                required: "Date is required"
+            }
+        });
+        $('#location').rules("add", {
+            required: true,
+            minlength: 3,
+            maxlength: 100,
+            normalizer: function(value) {
+                return $.trim(value);
+            },
+            messages: {
+                required: "Location is required",
+                minlength: "At least 3 letters are required",
+                maxlength: "Maximum text length is 100 symbols."
+            }
+        });
+        $('#content').rules("add", {
+            required: true,
+            minlength: 15,
+            maxlength: 3000,
+            normalizer: function(value) {
+                return $.trim(value);
+            },
+            messages: {
+                required: "Message content is required",
+                minlength: "At least 3 letters are required",
+                maxlength: "Maximum text length is 3000 symbols."
+            }
+        });
+    });
+    </script>
+</th:block>
+
+</html>

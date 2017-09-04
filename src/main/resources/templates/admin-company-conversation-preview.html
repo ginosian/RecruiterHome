@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<!--&lt;!&ndash;[if IE 8 ]>-->
+<!--<html class="ie ie8" lang="en"> <![endif]&ndash;&gt;-->
+<!--&lt;!&ndash;[if (gte IE 9)|!(IE)]>&lt;!&ndash;>-->
+<!--<html lang="en"> &lt;!&ndash;<![endif]&ndash;&gt;-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/home">
+
+<section layout:fragment="content" th:remove="tag">
+
+    <!-- Titlebar
+    ================================================== -->
+    <div id="titlebar" class="single">
+        <div class="container">
+
+            <div class="sixteen columns">
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li>You are here:</li>
+                        <li><a th:href="@{/admin/conversations/company/__${conversation.company.id}__}">Conversations</a></li>
+                        <li>Company conversation</li>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Blog Posts -->
+        <div class="eleven columns">
+            <div class="padding-right">
+
+
+                <form th:action="@{/admin/company/conversation/__${conversation.id}__}"
+                      th:object="${conversation}"
+                      method="get" id="conversationForm" name="conversationForm">
+
+
+                    <input type="hidden" name="page"/>
+                    <input type="hidden" name="size"/>
+
+                    <!-- Comments -->
+                    <section th:if="${pageWrapper.getItems().size() != 0}" class="eleven columns">
+                        <h4>Conversation <span class="comments-amount"></span></h4>
+
+                        <ul>
+                            <li th:each="message,rowStat : ${pageWrapper.page.content}">
+                                <div class="avatar"></div>
+                                <div class="comment-content">
+                                    <div class="arrow-comment"></div>
+                                    <div class="comment-by"
+                                         th:if="${message.author.id != message.conversation.company.id}"
+                                         th:text="${message.conversation.candidate.name}">
+                                        <span class="date"
+                                              th:text="${#temporals.format(message.createdAt, 'EEEE MM-dd-yyyy HH:mm')}"></span>
+                                    </div>
+                                    <div class="comment-by"
+                                         th:if="${message.author.id == message.conversation.company.id}"
+                                         th:text="${message.conversation.company.mainContact.name}">
+                                        <span class="date"
+                                              th:text="${#temporals.format(message.createdAt, 'EEEE MM-dd-yyyy HH:mm')}"></span>
+                                    </div>
+                                    <div>
+                                        <span class="date"><small
+                                                th:text="${#temporals.format(message.createdAt, 'EEEE MM-dd-yyyy HH:mm')}"></small></span>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    <div class="margin-top-35"></div>
+
+                                    <p>Title: <span th:text="${message.title}"></span></p>
+                                    <div class="clearfix"></div>
+                                    <p th:text="${message.content}"></p>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="clearfix"></div>
+
+                        <div class="pagination-container">
+                            <nav class="pagination">
+                                <ul th:if="${pageWrapper.getItems().size() != 0}">
+                                    <li th:class="${pageWrapper.hasPreviousPage}? '' : 'disabled'">
+                                        <a th:if="${not pageWrapper.hasPreviousPage}">«</a>
+                                        <a th:if="${pageWrapper.hasPreviousPage}"
+                                           th:href="'javascript:navigateForConversation(' + ${pageWrapper.number-1} + ',' + ${pageWrapper.size} + ')'">
+                                            «</a>
+                                    </li>
+                                    <li th:each="item : ${pageWrapper.items}"
+                                        th:class="${item.current}? 'active' : ''">
+                                        <a class="current-page" th:if="${item.current}" th:text="${item.number}">1</a>
+                                        <a th:if="${not item.current}"
+                                           th:href="'javascript:navigateForConversation(' + ${item.number} + ',' + ${pageWrapper.size} + ')'">
+                                            <span th:text="${item.number}">1</span></a>
+                                    </li>
+                                    <li th:class="${pageWrapper.hasNextPage}? '' : 'disabled'">
+                                        <a th:if="${not pageWrapper.hasNextPage}">»</a>
+                                        <a th:if="${pageWrapper.hasNextPage}"
+                                           th:href="'javascript:navigateForConversation(' + ${pageWrapper.number+1} + ',' + ${pageWrapper.size} + ')'">»</a>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                            <nav class="pagination-next-prev" th:if="${pageWrapper.getItems().size() != 0}">
+                                <ul>
+                                    <li th:class="${pageWrapper.firstPage} ? 'disabled' : ''">
+                                        <a class="prev" th:if="${pageWrapper.firstPage}">First</a>
+                                        <a class="prev" th:if="${not pageWrapper.firstPage}"
+                                           th:href="'javascript:navigateForConversation(' + 1 + ',' + ${pageWrapper.size} + ')'">
+                                            Previous</a>
+                                    </li>
+
+                                    <li th:class="${pageWrapper.lastPage}? 'disabled' : ''">
+                                        <a class="next" th:if="${pageWrapper.lastPage}">Last</a>
+                                        <a class="next" th:if="${not pageWrapper.lastPage}"
+                                           th:href="'javascript:navigateForConversation(' + ${pageWrapper.totalPages} + ',' + ${pageWrapper.size} + ')'">
+                                            Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </section>
+
+                </form>
+            </div>
+        </div>
+        <!-- Blog Posts / End -->
+
+    </div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+        var navigateForConversation = function (page, size) {
+            debugger;
+            var pageValue = parseInt(page);
+            var sizeValue = parseInt(size);
+            document.conversationForm.page.value = pageValue;
+            document.conversationForm.size.value = sizeValue;
+            document.conversationForm.submit();
+        }
+
+    </script>
+</th:block>
+</html>

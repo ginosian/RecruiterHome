@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"> <!--<![endif]-->
+<head>
+
+    <section th:include="fragments/head::head" th:remove="tag">
+    </section>
+
+</head>
+
+<body>
+<div id="wrapper">
+
+
+    <!-- Header
+    ================================================== -->
+    <header class="sticky-header">
+        <section th:include="fragments/header-company::header" th:remove="tag">
+        </section>
+    </header>
+    <div class="clearfix"></div>
+
+
+    <section layout:fragment="content">
+        <p>Page content goes here</p>
+    </section>
+
+
+    <!-- Footer
+    ================================================== -->
+    <section th:include="fragments/footer::footer" th:remove="tag">
+    </section>
+
+</div>
+<!-- Wrapper / End -->
+
+
+<!-- Scripts
+================================================== -->
+<section th:include="fragments/scripts::scripts" th:remove="tag">
+</section>
+
+<!-- Style Switcher
+================================================== -->
+<section th:include="fragments/style-switcher::style-switcher" th:remove="tag">
+</section>
+
+<th:block layout:fragment="script"></th:block>
+
+
+</body>
+</html>

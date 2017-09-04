@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<!--&lt;!&ndash;[if IE 8 ]>-->
+<!--<html class="ie ie8" lang="en"> <![endif]&ndash;&gt;-->
+<!--&lt;!&ndash;[if (gte IE 9)|!(IE)]>&lt;!&ndash;>-->
+<!--<html lang="en"> &lt;!&ndash;<![endif]&ndash;&gt;-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/home">
+
+<section layout:fragment="content" th:remove="tag">
+
+    <!-- Slider
+    ================================================== -->
+    <div class="fullwidthbanner-container">
+        <div class="fullwidthbanner">
+            <ul>
+
+                <!-- Slide 1 -->
+                <li data-fstransition="fade" data-transition="fade" data-slotamount="10" data-masterspeed="300">
+
+                    <img src="images/banner-01.jpg" alt=""/>
+
+                    <div class="caption title sfb" data-x="0" data-y="195" data-speed="400" data-start="800"
+                         data-easing="easeOutExpo">
+                        <h2>Explore and be discovered</h2>
+                    </div>
+
+                    <div class="caption text sfb" data-x="0" data-y="270" data-speed="400" data-start="1200"
+                         data-easing="easeOutExpo">
+                        <p>Connect directly with and be discovered by the employers <br>who want to hire you.</br></p>
+                    </div>
+
+                    <div class="caption sfb" data-x="0" data-y="400" data-speed="400" data-start="1600"
+                         data-easing="easeOutExpo">
+                        <a th:href="@{/registration}" class="slider-button">Get Started</a>
+                    </div>
+                </li>
+
+                <!-- Slide 2 -->
+                <li data-transition="slideup" data-slotamount="10" data-masterspeed="800">
+                    <img src="images/banner-02.jpg" alt=""/>
+
+                    <div class="caption title sfb" data-x="center" data-y="195" data-speed="400" data-start="800"
+                         data-easing="easeOutExpo">
+                        <h2>Hire great candidates</h2>
+                    </div>
+
+                    <div class="caption text align-center sfb" data-x="center" data-y="270" data-speed="400"
+                         data-start="1200" data-easing="easeOutExpo">
+                        <p>Work Scout is most trusted job board, connecting the world's <br> brightest minds with resume
+                            database loaded with talents.</br></p>
+                    </div>
+
+                    <div class="caption sfb" data-x="center" data-y="400" data-speed="400" data-start="1600"
+                         data-easing="easeOutExpo">
+                        <a th:href="@{/registration}" class="slider-button">Hire</a>
+                        <a th:href="@{/registration}" class="slider-button">Work</a>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- Counters -->
+    <!--<div id="counters">-->
+        <!--<div class="container">-->
+
+            <!--<div class="four columns">-->
+                <!--<div class="counter-box">-->
+                    <!--<span class="counter">15</span><i>k</i>-->
+                    <!--<p>Job Offers</p>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="four columns">-->
+                <!--<div class="counter-box">-->
+                    <!--<span class="counter">4982</span>-->
+                    <!--<p>Members</p>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="four columns">-->
+                <!--<div class="counter-box">-->
+                    <!--<span class="counter">768</span>-->
+                    <!--<p>Resumes Posted</p>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="four columns">-->
+                <!--<div class="counter-box">-->
+                    <!--<span class="counter">90</span><i>%</i>-->
+                    <!--<p>Clients Who Rehire</p>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        <!--</div>-->
+    <!--</div>-->
+
+
+    <!--&lt;!&ndash; Recent Posts &ndash;&gt;-->
+    <!--<div class="container">-->
+        <!--<div class="sixteen columns">-->
+            <!--<h3 class="margin-bottom-25">Job Plans and Pricing</h3>-->
+        <!--</div>-->
+
+
+        <!--&lt;!&ndash; Plan #1 &ndash;&gt;-->
+        <!--<div class="plan color-1 one-third column">-->
+            <!--<div class="plan-price">-->
+                <!--<h3>Start Up</h3>-->
+                <!--<span class="plan-currency">$</span>-->
+                <!--<span class="value">19</span>-->
+
+            <!--</div>-->
+            <!--<div class="plan-features">-->
+                <!--<ul>-->
+                    <!--<li>One Time Fee</li>-->
+                    <!--<li>This Plan Includes 1 Job</li>-->
+                    <!--<li>Non-Highlighted Post</li>-->
+                    <!--<li>Posted For 30 Days</li>-->
+                <!--</ul>-->
+                <!--<a class="button" th:href="@{/under-construction}"><i class="fa fa-shopping-cart"></i> Add to Cart</a>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; Plan #2 &ndash;&gt;-->
+        <!--<div class="plan color-2 one-third column">-->
+            <!--<div class="plan-price">-->
+                <!--<h3>Company</h3>-->
+                <!--<span class="plan-currency">$</span>-->
+                <!--<span class="value">59</span>-->
+            <!--</div>-->
+            <!--<div class="plan-features">-->
+                <!--<ul>-->
+                    <!--<li>One Time Fee</li>-->
+                    <!--<li>This Plan Includes 2 Jobs</li>-->
+                    <!--<li>Highlighted Job Post</li>-->
+                    <!--<li>Posted For 60 Days</li>-->
+                <!--</ul>-->
+                <!--<a class="button" th:href="@{/under-construction}"><i class="fa fa-shopping-cart"></i> Add to Cart</a>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; Plan #3 &ndash;&gt;-->
+        <!--<div class="plan color-1 one-third column">-->
+            <!--<div class="plan-price">-->
+                <!--<h3>Enterprise</h3>-->
+                <!--<span class="plan-currency">$</span>-->
+                <!--<span class="value">99</span>-->
+            <!--</div>-->
+            <!--<div class="plan-features">-->
+                <!--<ul>-->
+                    <!--<li>One Time Fee</li>-->
+                    <!--<li>This Plan Includes 4 Jobs</li>-->
+                    <!--<li>2 Highlighted Job Posts</li>-->
+                    <!--<li>Posted For 90 Days</li>-->
+                <!--</ul>-->
+                <!--<a class="button" th:href="@{/under-construction}"><i class="fa fa-shopping-cart"></i> Add to Cart</a>-->
+            <!--</div>-->
+        <!--</div>-->
+
+    <!--</div>-->
+    <!-- Container / End -->
+
+</section>
+</html>

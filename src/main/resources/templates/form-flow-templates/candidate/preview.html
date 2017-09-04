@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/home">
+
+
+<!--<section layout:fragment="top-banner" th:remove="tag"></section>-->
+
+<section layout:fragment="content" th:remove="tag">
+
+    <!-- Content
+================================================== -->
+    <form
+            th:action="${flowExecutionUrl}"
+            th:object="${candidate}"
+            method="post" class="register">
+        <div class="container">
+
+
+            <div id="titlebar" class="resume">
+                <div class="container">
+                    <div class="ten columns">
+                        <nav id="breadcrumbs">
+                            <ul>
+                                <li>You are here:</li>
+                                <li th:if="${#authentication != null and #authorization.expression('hasRole(''ROLE_CANDIDATE'')')}">
+                                    <a th:href="@{/candidate}">Home</a></li>
+                                <li th:if="${#authentication != null and #authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                                    <a th:href="@{/admin/candidates}">Home</a></li>
+                                <li th:if="${!candidate.signedInUser}">Sign Up - Preview and Register</li>
+                                <li th:if="${candidate.signedInUser}">Edit Account - Preview and Update</li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="ten columns">
+                        <div class="resume-titlebar">
+                            <div class="resumes-list-content">
+                                <h4 th:text="*{candidate.name}"><span>Accountant</span></h4>
+
+                                <span class="icons"><i class="fa fa-map-marker"></i></span>
+                                <span class="icons"
+                                      th:text="*{candidate.address.city}">
+                                </span>
+                                <span class="icons"
+                                      th:text="*{candidate.address.address}">
+                                </span>
+                                <span class="icons"
+                                      th:text="*{candidate.address.state.title}">
+                                </span>
+                                <spam class="icons"
+                                      th:text="*{candidate.address.zipCode}"/>
+                                <p></p>
+                                <span class="icons"><i class="fa fa-money"></i>$</span>
+                                <span class="icons" th:text="*{candidate.hourlyRate}"/>
+                                <span>/ hour</span>
+
+                                <div class="clearfix"></div>
+                                <span><i class="ln ln-icon-Stopwatch">Available</i></span>
+                                <span class="icons"
+                                      th:text="*{candidate.timePeriod}">
+                                </span>
+
+                                <p th:if="*{skillsDecorator != null}">
+                                <p th:each="skill,rowStat : *{skillsDecorator}">
+                                <p th:if="*{skillsDecorator[__${rowStat.index}__] != null}">
+
+                                <div class="skills">
+                                    <span th:text="*{skillsDecorator[__${rowStat.index}__].skill.title}"></span>
+                                </div>
+                                </p>
+                                </p>
+                                </p>
+
+
+                                <div class="clearfix"></div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div class="six columns">-->
+                        <!--<div class="two-buttons">-->
+                            <!--<a href="#small-dialog" class="popup-with-zoom-anim button"><i class="fa fa-envelope"></i>-->
+                                <!--Download resume</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                </div>
+            </div>
+
+
+            <!-- Content
+            ================================================== -->
+            <div class="container">
+                <!-- Recent Jobs -->
+                <div class="eight columns">
+                    <button id="back" type="submit" name="_eventId_back" class="button big margin-top-5">
+                        <i class="fa fa-arrow-circle-left"></i> Back
+                    </button>
+
+                    <button id="register" th:if="*{!signedInUser}" type="submit" name="_eventId_register"
+                            class="button big margin-top-5">
+                        REGISTER <i class="fa fa-arrow-circle-right"></i>
+                    </button>
+
+                    <button id="update" th:if="*{signedInUser}" type="submit" name="_eventId_update"
+                            class="button big margin-top-5">
+                        UPDATE <i class="fa fa-arrow-circle-right"></i>
+                    </button>
+
+                    <a type="button"  th:href="@{/registration}"
+                            class="button big margin-top-5">
+                        CANCEL
+                    </a>
+                </div>
+
+
+                <!-- Widgets -->
+                <div class="eight columns">
+                    <h3 class="margin-bottom-20">Skills</h3>
+
+                    <!-- Resume Table -->
+                    <dl class="resume-table">
+                        <p th:if="*{skillsDecorator != null}">
+                        <p th:each="skill,rowStat : *{skillsDecorator}">
+                        <p th:if="*{skillsDecorator[__${rowStat.index}__] != null}">
+                            <dd>
+                        <p th:text="*{skillsDecorator[__${rowStat.index}__].skill.title}"></p>
+                        <small class="date">Experience</small>
+                        <small class="date"
+                               th:text="*{skillsDecorator[__${rowStat.index}__].experienceDuration}"></small>
+                        <small class="date">years</small>
+                        </dd>
+                        </p>
+                        </p>
+                        </p>
+                    </dl>
+
+                    <h3 class="margin-bottom-20">Certifications</h3>
+
+                    <!-- Resume Table -->
+                    <dl class="resume-table">
+                        <p th:if="*{certificationsDecorator != null}">
+                        <p th:each="soft,rowStat : *{certificationsDecorator}">
+                        <p th:if="*{certificationsDecorator[__${rowStat.index}__] != null}">
+                        <p th:if="*{certificationsDecorator[__${rowStat.index}__].active}">
+                            <dd>
+                        <p th:text="*{certificationsDecorator[__${rowStat.index}__].certificationsModel.title}"></p>
+                        </dd>
+                        </p>
+                        </p>
+                        </p>
+                        </p>
+                    </dl>
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+
+</section>
+</html>
+
+

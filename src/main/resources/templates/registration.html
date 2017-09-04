@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--&lt;!&ndash;[if IE 8 ]>-->
+<!--<html class="ie ie8" lang="en"> <![endif]&ndash;&gt;-->
+<!--&lt;!&ndash;[if (gte IE 9)|!(IE)]>&lt;!&ndash;>-->
+<!--<html lang="en"> &lt;!&ndash;<![endif]&ndash;&gt;-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/home">
+
+<section layout:fragment="content" th:remove="tag">
+
+    <!-- Titlebar
+    ================================================== -->
+    <div id="titlebar" class="single">
+        <div class="container">
+
+            <div class="sixteen columns">
+                <h2>Login</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li>You are here:</li>
+                        <li><a th:href="@{/}">Home</a></li>
+                        <li>Login</li>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Content
+    ================================================== -->
+
+    <!-- Container -->
+    <div class="container">
+        <div class="my-account">
+            <ul class="tabs-nav">
+                <li>Choose registration type</li>
+            </ul>
+            <div class="tabs-container" id="tabs-container">
+                <!-- Login -->
+                <div class="tab-content" id="tab1" style="display: none;">
+                    <form
+                            th:action="@{/registration/redirect}"
+                            th:object="${choosenType}" method="post"
+                          class="register">
+
+                        <div>
+                            <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+                        </div>
+
+                        <p class="form-row form-row-wide">
+                            <select th:field="*{type}" class="chosen-select-no-single">
+                                <option value="0">Please select</option>
+                                <option th:each="type : ${registrationtypes}"
+                                        th:value="${type.getType()}"
+                                        th:selected="${type.getType()}"
+                                        th:text="${type.getType()}">
+                                </option>
+                            </select>
+                        </p>
+                        <p class="form-row">
+                            <input type="submit" class="button border fw margin-top-10" name="next" value="Next"/>
+
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</html>

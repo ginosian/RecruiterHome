@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<!--&lt;!&ndash;[if IE 8 ]>-->
+<!--<html class="ie ie8" lang="en"> <![endif]&ndash;&gt;-->
+<!--&lt;!&ndash;[if (gte IE 9)|!(IE)]>&lt;!&ndash;>-->
+<!--<html lang="en"> &lt;!&ndash;<![endif]&ndash;&gt;-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/company">
+<section layout:fragment="content" th:remove="tag">
+    <!-- Titlebar
+    ================================================== -->
+    <div id="titlebar">
+        <div class="container">
+            <div class="ten columns">
+                <h2>Search Candidates</h2>
+            </div>
+        </div>
+    </div>
+    <!-- Content
+    ================================================== -->
+    <div class="container">
+        <form th:action="@{/company/search}" th:object="${candidateSearchModel}" method="post" id="searchForm" name="searchForm">
+            <!-- Recent Jobs -->
+            <div class="eleven columns" id="leftPanel">
+                <div class="padding-right">
+                    <div>
+                        <ul class="resumes-list" th:if="${pageWrapper.getItems().size() != 0}">
+                            <li th:each="cons,rowStat : ${pageWrapper.page.content}">
+                                <a th:href="@{/company/search/preview/candidate/__${cons.jpaId}__}" th:target="_blank">
+                                    <div class="resumes-list-content">
+                                        <h4 th:text="${cons.name}">
+                                            <span th:text="${cons.name}"></span>
+                                            <span>Experience:</span>
+                                            <span th:text="${cons.name}"></span>
+                                        </h4>
+                                        <span th:text="${cons.city}"><i class="fa fa-map-marker"></i></span>
+                                        <span><i class="fa fa-money"></i> $</span>
+                                        <span th:text="${cons.hourlyRate}"></span>
+                                        <span> / hour</span>
+                                        <div>
+                                            <h6>Skills</h6>
+                                            <div class="skills" th:each="skill : ${cons.skills}">
+                                                <div th:if="${skill.title} eq *{skillPlaceholder.skill.title}">
+                                                    <span th:value="${skill.title}" th:text="${skill.title}"></span>
+                                                    <span th:value="${skill.experienceDuration}" th:text="${skill.experienceDuration}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div th:if="${cons.certifications != null &#38;&#38; cons.certifications.size() != 0}">
+                                            <h6>Certifications</h6>
+                                            <div class="skills" th:each="soft : ${cons.certifications}">
+                                                <span th:value="${soft.title}" th:text="${soft.title}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                                <div class="clearfix"></div>
+                            </li>
+                        </ul>
+
+                        <ul class="resumes-list" th:if="${pageWrapper.getItems().size() == 0}">
+                            <li>
+                                    <div class="resumes-list-content">
+                                        <h4>
+                                           No search results.
+                                        </h4>
+                                        <h5>
+                                            Refine your search filters.
+                                        </h5>
+                                    </div>
+                                <div class="clearfix"></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="pagination-container">
+                        <nav class="pagination">
+                            <ul th:if="${pageWrapper.getItems().size() != 0}">
+                                <li th:class="${pageWrapper.hasPreviousPage}? '' : 'disabled'">
+                                    <a th:if="${not pageWrapper.hasPreviousPage}">«</a>
+                                    <a th:if="${pageWrapper.hasPreviousPage}" th:href="'javascript:navigatePage(' + ${pageWrapper.number-1} + ',' + ${pageWrapper.size} + ')'">
+                                        «</a>
+                                </li>
+                                <li th:each="item : ${pageWrapper.items}" th:class="${item.current}? 'active' : ''">
+                                    <a class="current-page" th:if="${item.current}" th:text="${item.number}">1</a>
+                                    <a th:if="${not item.current}" th:href="'javascript:navigatePage(' + ${item.number} + ',' + ${pageWrapper.size} + ')'">
+                                        <span th:text="${item.number}">1</span></a>
+                                </li>
+                                <li th:class="${pageWrapper.hasNextPage}? '' : 'disabled'">
+                                    <a th:if="${not pageWrapper.hasNextPage}">»</a>
+                                    <a th:if="${pageWrapper.hasNextPage}" th:href="'javascript:navigatePage(' + ${pageWrapper.number+1} + ',' + ${pageWrapper.size} + ')'">»</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <nav class="pagination-next-prev" th:if="${pageWrapper.getItems().size() != 0}">
+                            <ul>
+                                <li th:class="${pageWrapper.firstPage} ? 'disabled' : ''">
+                                    <a class="prev" th:if="${pageWrapper.firstPage}">First</a>
+                                    <a class="prev" th:if="${not pageWrapper.firstPage}" th:href="'javascript:navigatePage(' + 1 + ',' + ${pageWrapper.size} + ')'">
+                                        Previous</a>
+                                </li>
+                                <li th:class="${pageWrapper.lastPage}? 'disabled' : ''">
+                                    <a class="next" th:if="${pageWrapper.lastPage}">Last</a>
+                                    <a class="next" th:if="${not pageWrapper.lastPage}" th:href="'javascript:navigatePage(' + ${pageWrapper.totalPages} + ',' + ${pageWrapper.size} + ')'">
+                                        Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- Widgets -->
+            <div class="five columns" id="rightPanel">
+                <div>
+                    <!-- Add Skill  -->
+                    <input class="search-field" type="hidden" th:field="*{error}" />
+                    <p th:each="error: ${#fields.errors('error')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">
+                        Validation error
+                    </p>
+                    <div class="form with-line">
+                        <div class="margin-top-15"></div>
+                        <!--<button id="btnSearch1" name="btnSearch1" type="button" class="button" onclick="search()">Search</button>-->
+                        <button id="btnSearch1" name="btnSearch1" type="submit" class="button">Search</button>
+                        <p class="clearfix"></p>
+                        <div class="">
+                            <!-- Skill -->
+                            <div class="widget required-field">
+                                <h5>Skills</h5>
+                                <select th:field="*{skillPlaceholder.skill}" class="chosen-select-no-single required" id="skill">
+                                    <option value="0">Please select</option>
+                                    <option th:each="skill : ${skills}" th:value="${skill.getId()}" th:selected="${skill}" th:text="${skill.getTitle()}"  >
+                                    </option>
+                                </select>
+                                <p th:each="error: ${#fields.errors('skillPlaceholder.skill')}" th:text="${error}" style="font-size: 20; color: #FF1C19;" id="skillError">Validation error</p>
+                            </div>
+                            <!-- Experience duration -->
+                            <div class="widget" id="experience">
+                                <h5>Years of Experience</h5>
+                                <input type="number" th:field="*{skillPlaceholder.experienceDuration}" name="newExperienceDuration" id="newExperienceDuration" step="1" placeholder="1" min="1" />
+                                <p th:each="error: ${#fields.errors('skillPlaceholder.experienceDuration')}" th:text="${error}" style="font-size: 20; color: #FF1C19;" id="experienceError">Validation error</p>
+                            </div>
+                            <!-- Experience with  Certifications -->
+                            <div class="widget">
+                                <h5>Experience with  Certifications</h5>
+                                <h6 class="checkboxes" style="margin-bottom: 0;">
+
+                                    <div th:each="certificationsModel,rowStat : *{certificationsDecorator}">
+                                        <input type="hidden"
+                                               th:name="${'certificationsDecorator[' + rowStat.index + '].model.title'}"
+                                               th:value="${certificationsModel.model.title}"
+                                        />
+                                        <input class="filter_by_check" type="checkbox"
+                                               th:name="${'certificationsDecorator[' + rowStat.index + '].active'}"
+                                               checked="checked"
+                                               th:value="1"
+                                               th:if="${certificationsModel.isActive()}"
+                                               th:id="${'check_' + __${rowStat.index}__}"/>
+                                        <input class="filter_by_check" type="checkbox"
+                                               th:name="${'certificationsDecorator[' + rowStat.index + '].active'}"
+                                               th:value="1"
+                                               th:if="${!certificationsModel.isActive()}"
+                                               th:id="${'check_' + __${rowStat.index}__}"/>
+
+                                        <label class="cmn-label" th:for="${'check_' + __${rowStat.index}__}"
+                                               th:text="*{certificationsDecorator[__${rowStat.index}__].model.title}"/>
+                                    </div>
+                                </h6>
+                            </div>
+                            <!-- Hourly Rate -->
+                            <div class="widget required-field">
+                                <h5>Hourly Rate</h5>
+                                <div class="form-group">
+                                    <span class="control-icon">$</span>
+                                    <input class="form-control" id="hourlyRate" th:field="*{hourlyRate}" type="number" step="1" min="1" />
+                                    <p th:each="error: ${#fields.errors('hourlyRate')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                                </div>
+                            </div>
+                            <div class="widget required-field">
+                                <h5>Contract duration</h5>
+                                <div class="form-group">
+                                    <select th:field="*{timePeriod}" id="timePeriod" class="form-control chosen-select-no-single">
+                                        <option value="0">Please select</option>
+                                        <option th:each="timePeriod : ${timePeriods}" th:value="${timePeriod.getType()}" th:selected="${timePeriod.getType()}" th:text="${timePeriod.getType()}">
+                                        </option>
+                                    </select>
+                                    <p th:each="error: ${#fields.errors('timePeriod')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                                </div>
+                            </div>
+                            <!-- Location -->
+                            <div class="widget required-field">
+                                <h5>Location</h5>
+                                <div class="form-group">
+                                    <input class="form-control" type="text" th:field="*{location}" placeholder="Any of  state/province/city" value="" />
+                                    <p th:each="error: ${#fields.errors('location')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                                </div>
+                            </div>
+                            <!--Starting date-->
+                            <!--<div class="widget required-field">-->
+                            <!--<h5>Starting date</h5>-->
+                            <!--<input style="position: relative; z-index: 100000;"-->
+                            <!--type="text"-->
+                            <!--id="startDate"-->
+                            <!--placeholder="Starting date"-->
+                            <!--th:field="*{startingDate}"/>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="page" />
+                <input type="hidden" name="size" />
+                <div class="margin-top-15"></div>
+                <button id="btnSearch2" name="btnSearch2" type="submit" class="button">Search</button>
+            </div>
+        </form>
+        <!-- Widgets / End -->
+    </div>
+</section>
+<th:block layout:fragment="script">
+    <script>
+    var navigatePage = function(page, size) {
+        var pageValue = parseInt(page);
+        var sizeValue = parseInt(size);
+        document.searchForm.page.value = pageValue;
+        document.searchForm.size.value = sizeValue;
+        document.searchForm.submit();
+    }
+
+    $(document).ready(function() {
+        $('#searchForm').validate({
+            submitHandler: function(form) {
+                $(form).submit();
+                return false;
+            },
+            invalidHandler: function() {
+                debugger;
+            }
+        });
+
+        $('#skill').rules("add", {
+            required: true,
+            value : 0,
+            messages: {
+                value:  "Skill is required."
+            }
+        });
+        $('#newExperienceDuration').rules("add", {
+            required: true,
+            minlength: 1,
+            maxlength: 99,
+            normalizer: function(value) {
+                return $.trim(value);
+            },
+            messages: {
+                required: "Experience is required.",
+                minlength: "At least 1 year should be required.",
+                maxlength: "Maximum experience duration is 99 years.."
+            }
+        });
+        $('#location').rules("add", {
+            required: true,
+            normalizer: function(value) {
+                return $.trim(value);
+            },
+            messages: {
+                required: "Location is required.",
+            }
+        });
+        $('#hourlyRate').rules("add", {
+            required: true,
+            normalizer: function(value) {
+                return $.trim(value);
+            },
+            messages: {
+                required: "Hourly rate  is required.",
+            }
+        });
+        $('#timePeriod').rules("add", {
+            required: true,
+            value : 0,
+            messages: {
+                value:  "Time period is required."
+            }
+        });
+    });
+    </script>
+</th:block>
+
+</html>

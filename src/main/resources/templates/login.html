@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--&lt;!&ndash;[if IE 8 ]>-->
+<!--<html class="ie ie8" lang="en"> <![endif]&ndash;&gt;-->
+<!--&lt;!&ndash;[if (gte IE 9)|!(IE)]>&lt;!&ndash;>-->
+<!--<html lang="en"> &lt;!&ndash;<![endif]&ndash;&gt;-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/home">
+
+<section layout:fragment="content" th:remove="tag">
+
+    <!-- Titlebar
+    ================================================== -->
+    <div id="titlebar" class="single">
+        <div class="container">
+
+            <div class="sixteen columns">
+                <h2>Login</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li>You are here:</li>
+                        <li><a th:href="@{/}">Home</a></li>
+                        <li>Login</li>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Content
+    ================================================== -->
+
+    <!-- Container -->
+    <div class="container">
+        <div class="my-account">
+            <ul class="tabs-nav">
+                <li>Login</li>
+            </ul>
+            <div class="tabs-container" id="tabs-container">
+                <!-- Login -->
+                <div class="tab-content" id="tab1" style="display: none;">
+                    <form method="post" class="login">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <p class="form-row form-row-wide">
+                            <label for="username">Username:
+                                <i class="ln ln-icon-Male"></i>
+                                <input type="text" class="input-text" name="username" id="username" value=""/>
+                            </label>
+                        </p>
+                        <p class="form-row form-row-wide">
+                            <label for="password">Password:
+                                <i class="ln ln-icon-Lock-2"></i>
+                                <input class="input-text" type="password" name="password" id="password"/>
+                            </label>
+                        </p>
+                        <div align="center" th:if="${param.error}">
+                            <p style="font-size: 20; color: #FF1C19;">Email or Password is invalid.</p>
+                        </div>
+
+                        <p class="form-row">
+                            <input type="submit" class="button border fw margin-top-10" name="login" value="Login"/>
+
+                            <label for="remember-me" class="rememberme">
+                                <input name="remember-me" type="checkbox" id="remember-me"/> Remember
+                                Me</label>
+                        </p>
+                        <p class="lost_password">
+                            <a th:href="@{/password-lost}">Lost Your Password?</a>
+                        </p>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</html>

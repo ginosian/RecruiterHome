@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:schemaLocation="
+	  	http://www.springframework.org/schema/webflow
+	  	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+ 	<on-start>
+		<evaluate expression="companyFormService.createCompany()" result="flowScope.company" />
+		<evaluate expression="companyFormService.getIndustries()" result="flowScope.industries" />
+		<evaluate expression="companyFormService.getStates()" result="flowScope.states" />
+	</on-start>
+
+	<view-state id="stepOne" view="/form-flow-templates/company/step-one" model="company">
+
+		<transition on="next" to="stepTwo" bind="true" validate="true" />
+
+	</view-state>
+
+	<view-state id="stepTwo" view="/form-flow-templates/company/step-two" model="company">
+
+		<transition on="next" to="stepFinal"  bind="true" validate="true" />
+
+		<transition on="back" to="stepOne"  bind="true" validate="false"/>
+
+	</view-state>
+
+    <view-state id="stepFinal" view="/form-flow-templates/company/step-final" model="company">
+
+        <transition on="addAddress" to="stepFinal" validate="true" bind="true">
+            <evaluate expression="companyFormService.addAddress(company)" result="flowScope.company"/>
+        </transition>
+
+        <transition on="deleteAddress" to="stepFinal" validate="false" bind="true">
+            <evaluate expression="companyFormService.deleteAddress(company)" result="flowScope.company"/>
+        </transition>
+
+        <transition on="back"  to="stepTwo"  validate="false" bind="true"/>
+
+        <transition on="preview" to="preview" validate="true" bind="true"/>
+    </view-state>
+
+	<view-state id="preview" view="/form-flow-templates/company/preview" model="company">
+
+		<transition on="register" to="end" validate="false" bind="true" history="discard">
+			<evaluate expression="companyFormService.saveCompany(company)"/>
+		</transition>
+
+		<transition on="back"  to="stepFinal"  validate="false" bind="true"/>
+
+	</view-state>
+
+	<end-state id="end" view="externalRedirect:login" />
+
+</flow>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/home">
+
+
+<!--<section layout:fragment="top-banner" th:remove="tag"></section>-->
+
+<section layout:fragment="content" th:remove="tag">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+    <!-- Titlebar
+    ================================================== -->
+    <div id="titlebar">
+        <div class="container">
+            <div class="ten columns">
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li>You are here:</li>
+                        <li th:if="${#authentication != null and #authorization.expression('hasRole(''ROLE_CANDIDATE'')')}"><a th:href="@{/candidate}">Home</a></li>
+                        <li th:if="${#authentication != null and #authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a th:href="@{/admin/candidates}">Home</a></li>
+                        <li th:if="${!candidate.signedInUser}">Sign Up - Final Step</li>
+                        <li th:if="${candidate.signedInUser}">Edit Account - Final Step</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Content
+    ================================================== -->
+
+
+    <!-- Container -->
+    <div class="container" id="content">
+
+        <!-- Submit Page -->
+        <div class="sixteen columns">
+            <div class="submit-page">
+                <form
+                        th:action="${flowExecutionUrl}"
+                        th:object="${candidate}"
+                        method="post" enctype="multipart/form-data" class="register" id="final">
+
+
+                    <div th:if="*{skillsDecorator != null}">
+                        <!-- Experience  -->
+                        <div class="form with-line">
+                            <h5>Your skills</h5>
+
+                            <p th:each="error: ${#fields.errors('index')}"
+                               th:text="${error}"
+                               style="font-size: 20; color: #FF1C19;">Validation error</p>
+                            <p th:each="error: ${#fields.errors('errorSkillPlaceholder.skill')}"
+                               th:text="${error}"
+                               style="font-size: 20; color: #FF1C19;">Validation error</p>
+                            <p th:each="error: ${#fields.errors('errorSkillPlaceholder.experienceDuration')}"
+                               th:text="${error}"
+                               style="font-size: 20; color: #FF1C19;">Validation error</p>
+
+                            <div th:each="address,rowStat : *{skillsDecorator}">
+                                <div th:if="*{skillsDecorator[__${rowStat.index}__] != null}">
+                                    <input type="hidden" name="index" id="index" th:field="*{index}"
+                                           th:value="${rowStat.index}"/>
+                                    <!-- Add more skills -->
+                                    <div class="form boxed">
+                                        <a id="deleteAddress" type="submit" name="_eventId_deleteAddress"
+                                           class="close-form button"
+                                           th:href="@{${flowExecutionUrl}(_eventId='deleteSkill')}">
+                                            <i class="fa fa-close"></i>
+                                        </a>
+                                        <!-- Skill -->
+                                        <div class="form  required-field">
+                                            <h5>Skill</h5>
+                                            <select th:field="*{skillsDecorator[__${rowStat.index}__].skill}"
+                                                    id="skill" required="required">
+                                                <option th:if="*{skillsDecorator[__${rowStat.index}__].skill != null}"
+                                                        value="0"
+                                                        th:text="*{skillsDecorator[__${rowStat.index}__].skill.title}"></option>
+                                                <option th:each="skill : ${skillsList}"
+                                                        th:value="${skill.getId()}"
+                                                        th:selected="${skill}"
+                                                        th:text="${skill.getTitle()}">
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Experience duration -->
+                                        <div class="form  required-field">
+                                            <h5>Experience duration</h5>
+                                            <input class="search-field" type="number" step="1"
+                                                   th:field="*{skillsDecorator[__${rowStat.index}__].experienceDuration}"
+                                                   name="experienceDuration"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Add Skill  -->
+                    <div th:if="*{count &#60; 5}">
+                        <h5>Add skills <span>(optional)</span></h5>
+
+                        <input class="search-field" type="hidden"
+                               th:field="*{error}"/>
+                        <p th:each="error: ${#fields.errors('error')}"
+                           th:text="${error}"
+                           style="font-size: 20; color: #FF1C19;">Validation error</p>
+
+                        <div class="form with-line">
+                            <div class="">
+                                <!-- Add more skills -->
+                                <div class="form boxed experience-box">
+                                    <!-- Skill -->
+                                    <div class="form  required-field">
+                                        <h5>Skills</h5>
+                                        <p th:each="error: ${#fields.errors('skillPlaceholder.skill')}"
+                                           th:text="${error}"
+                                           style="font-size: 20; color: #FF1C19;">Validation error</p>
+                                        <select th:field="*{skillPlaceholder.skill}"
+                                                id="newskill" required="required">
+                                            <option value="0">Please select</option>
+                                            <option th:each="skill : ${skillsList}"
+                                                    th:value="${skill.getId()}"
+                                                    th:selected="${skill}"
+                                                    th:text="${skill.getTitle()}">
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Experience duration -->
+                                    <div class="form  required-field">
+                                        <h5>Experience duration</h5>
+                                        <input class="search-field" type="number"
+                                               th:field="*{skillPlaceholder.experienceDuration}"
+                                               name="newexperienceDuration" placeholder="1" step="1"/>
+                                    </div>
+                                    <p th:each="error: ${#fields.errors('skillPlaceholder.experienceDuration')}"
+                                       th:text="${error}"
+                                       style="font-size: 20; color: #FF1C19;">Validation error</p>
+                                </div>
+
+                                <button id="addSkill" type="submit" name="_eventId_addSkill"
+                                        class="button gray">
+                                    <i class="fa fa-plus-circle"></i> Save Skill
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience with  Certifications -->
+                    <div class="widget  required-field">
+                        <h4>Experience with  Certifications</h4>
+                        <h6 class="checkboxes" style="margin-bottom: 0;">
+
+                            <div th:each="certifications,rowStat : *{certificationsDecorator}">
+                                <input type="hidden"
+                                       th:name="${'certificationsDecorator[' + rowStat.index + '].certificationsModel.title'}"
+                                       th:value="${certifications.certificationsModel.title}"/>
+                                <input class="filter_by_check" type="checkbox" th:type="checkbox"
+                                       th:name="${'certificationsDecorator[' + rowStat.index + '].active'}"
+                                       th:checked="${certifications.active}"
+                                       th:value="1"
+                                       th:id="${'check_' + __${rowStat.index}__}"/>
+
+                                <label class="cmn-label" th:for="${'check_' + __${rowStat.index}__}"
+                                       th:text="*{certificationsDecorator[__${rowStat.index}__].certificationsModel.title}"></label>
+                            </div>
+                        </h6>
+                    </div>
+
+                    <!-- Resume upload -->
+                    <div class="form  required-field">
+                        <h5>Upload resume (pdf or Microsoft Word file)</h5>
+                        <label class="upload-btn">
+                            <input type="file" multiple="multiple"
+                                   name="resumePath"/>
+                            <i class="fa fa-upload"></i> Browse
+                        </label>
+                        <span th:text="*{candidate.resume.fileName}"></span>
+                        <button id="uploadResume" type="submit" name="_eventId_uploadResume"
+                                class="button gray">
+                            <i class="fa fa-plus-circle"></i> Upload
+                        </button>
+
+                    </div>
+
+                    <!-- Hourly rate -->
+                    <div class="form  required-field">
+                        <h5>Your hourly rate</h5>
+                        <input class="search-field" type="number"
+                               th:field="*{candidate.hourlyRate}"
+                               name="hourlyRate" placeholder="$0.00" id="hourlyRate" step="1"/>
+                        <p th:each="error: ${#fields.errors('candidate.hourlyRate')}"
+                           th:text="${error}"
+                           style="font-size: 20; color: #FF1C19;">Validation error</p>
+                    </div>
+
+
+                    <button id="back" type="submit" name="_eventId_back" class="button big margin-top-5">
+                        <i class="fa fa-arrow-circle-left"></i> Back
+                    </button>
+
+                    <button id="preview" type="submit" name="_eventId_preview" class="button big margin-top-5">
+                        Preview <i class="fa fa-arrow-circle-right"></i>
+                    </button>
+
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+</html>
+

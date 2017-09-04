@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!--&lt;!&ndash;[if IE 8 ]>-->
+<!--<html class="ie ie8" lang="en"> <![endif]&ndash;&gt;-->
+<!--&lt;!&ndash;[if (gte IE 9)|!(IE)]>&lt;!&ndash;>-->
+<!--<html lang="en"> &lt;!&ndash;<![endif]&ndash;&gt;-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/home">
+<section layout:fragment="content" th:remove="tag">
+    <!-- Titlebar
+    ================================================== -->
+    <div id="titlebar">
+        <div class="container">
+            <div class="ten columns">
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li>You are here:</li>
+                        <li th:if="${#authentication != null and #authorization.expression('hasRole(''ROLE_CANDIDATE'')')}"><a th:href="@{/candidate}">Home</a></li>
+                        <li th:if="${#authentication != null and #authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a th:href="@{/admin/candidates}">Home</a></li>
+                        <li th:if="${!candidate.signedInUser}">Sign Up - Step Two</li>
+                        <li th:if="${candidate.signedInUser}">Edit Account - Step Two</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content
+    ================================================== -->
+    <div class="container">
+        <!-- Submit Page -->
+        <div class="sixteen columns">
+            <div class="submit-page">
+                <form th:action="${flowExecutionUrl}" th:object="${candidate}" method="post" class="register" id="form">
+                    <!-- Name -->
+                    <div class="form  required-field">
+                        <h5>Full name</h5>
+                        <input class="search-field" type="text" th:field="*{candidate.name}" name="candidate-name" placeholder="Candidate Name" />
+                        <p th:each="error: ${#fields.errors('candidate.name')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                    </div>
+                    <!-- Date of Birth -->
+                    <div class="form  required-field">
+                        <h5>Date of Birth </h5>
+                        <input id="date" style="position: relative; z-index: 100000;" th:field="*{candidate.birthDate}" name="date" type="text" placeholder="yyyy/mm/dd" />
+                        <p th:each="error: ${#fields.errors('candidate.birthDate')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                    </div>
+                    <!-- State -->
+                    <div class="form  required-field">
+                        <h2>Address:</h2>
+                        <h5>State</h5>
+                        <select th:field="*{candidate.address.state}" id="state" class="chosen-select-no-single">
+                            <option value="0">Please select</option>
+                            <option th:each="state : ${states}" th:value="${state.getId()}" th:selected="${state}" th:text="${state.getTitle()}">
+                            </option>
+                        </select>
+                        <p th:each="error: ${#fields.errors('candidate.address.state')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                    </div>
+                    <!-- City -->
+                    <div class="form  required-field">
+                        <h5>City</h5>
+                        <input class="search-field" type="text" th:field="*{candidate.address.city}" name="city" placeholder="City" />
+                        <p th:each="error: ${#fields.errors('candidate.address.city')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                    </div>
+                    <!-- Address -->
+                    <div class="form  required-field">
+                        <h5>Address</h5>
+                        <input class="search-field" type="text" th:field="*{candidate.address.address}" name="address" placeholder="Address" />
+                        <p th:each="error: ${#fields.errors('candidate.address.address')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                    </div>
+                    <!-- ZIP -->
+                    <div class="form  required-field">
+                        <h5>Zip Code</h5>
+                        <input class="search-field" type="number" min="0" th:field="*{candidate.address.zipCode}" name="zip" placeholder="ZIP Code" />
+                        <p th:each="error: ${#fields.errors('candidate.address.zipCode')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                    </div>
+                    <!--In which areas are you available-->
+                    <div th:if="*{areaDecorator != null}">
+                        <div class="widget  required-field">
+                            <h4>In which areas are you available</h4>
+                            <h6 class="checkboxes" style="margin-bottom: 0;">
+
+
+                                <div th:each="area,rowStat : *{areaDecorator}">
+
+
+                                    <input type="hidden"
+                                           th:name="${'areaDecorator[' + rowStat.index + '].area.title'}"
+                                           th:value="${area.area.title}"/>
+                                    <input class="filter_by_check" type="checkbox" th:type="checkbox"
+                                           th:name="${'areaDecorator[' + rowStat.index + '].active'}"
+                                           th:checked="${area.active}"
+                                           th:value="1"
+                                           th:id="${'check_' + __${rowStat.index}__}"/>
+
+                                    <label class="cmn-label" th:for="${'check_' + __${rowStat.index}__}"
+                                           th:text="*{areaDecorator[__${rowStat.index}__].area.title}"/>
+
+
+                                    <!--<input type="checkbox" name="certificationsDecorator"-->
+                                    <!--th:field="*{areaDecorator[__${rowStat.index}__].active}"-->
+                                    <!--th:checked="*{areaDecorator[__${rowStat.index}__].active}"-->
+                                    <!--th:value="*{areaDecorator[__${rowStat.index}__].active}"-->
+                                    <!--id="check"/>-->
+                                    <!--<label for="check"-->
+                                    <!--th:text="*{areaDecorator[__${rowStat.index}__].area.title}"/>-->
+                                </div>
+                            </h6>
+                        </div>
+                    </div>
+                    <p th:each="error: ${#fields.errors('error')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                    <div class="form  required-field">
+                        <h2>Availability</h2>
+                        <h5>Time period you are available</h5>
+                        <select th:field="*{candidate.timePeriod}" id="timePeriod" class="chosen-select-no-single">
+                            <option value="0">Please select</option>
+                            <option th:each="timePeriod : ${timePeriods}" th:value="${timePeriod.getType()}" th:selected="${timePeriod.getType()}" th:text="${timePeriod.getType()}">
+                            </option>
+                        </select>
+                        <p th:each="error: ${#fields.errors('candidate.timePeriod')}" th:text="${error}" style="font-size: 20; color: #FF1C19;">Validation error</p>
+                    </div>
+                    <button id="back" type="submit" name="_eventId_back" class="button big margin-top-5">
+                        <i class="fa fa-arrow-circle-left"></i> Back
+                    </button>
+                    <button id="next" type="submit" name="_eventId_next" class="button big margin-top-5"> Next
+                        <i class="fa fa-arrow-circle-right"></i>
+                    </button>
+                    <button class="hidden" id="updateArea" type="submit" name="_eventId_updateArea"></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+</html>
+<script>
+$('#state').on('change', function() {
+    $('#updateArea').click();
+});
+
+/*<![CDATA[*/
+$(function() {
+    $("#date").datepicker({
+        dateFormat: "yy-mm-dd",
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '-80:-18',
+        showButtonPanel: true,
+        autoclose: true,
+        todayHighlight: true
+    });
+});
+
+/*]]>*/
+</script>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--&lt;!&ndash;[if IE 8 ]>-->
+<!--<html class="ie ie8" lang="en"> <![endif]&ndash;&gt;-->
+<!--&lt;!&ndash;[if (gte IE 9)|!(IE)]>&lt;!&ndash;>-->
+<!--<html lang="en"> &lt;!&ndash;<![endif]&ndash;&gt;-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/home">
+
+<section layout:fragment="content" th:remove="tag">
+
+    <!-- Slider
+    ================================================== -->
+    <div class="fullwidthbanner-container">
+        <div class="fullwidthbanner">
+            <ul>
+
+                <!-- Slide 1 -->
+                <li data-fstransition="fade" data-transition="fade" data-slotamount="10" data-masterspeed="300">
+
+                    <img src="/images/banner-01.jpg" alt=""/>
+
+                    <div class="caption title sfb" data-x="0" data-y="195" data-speed="400" data-start="800"
+                         data-easing="easeOutExpo">
+                        <h2>Page is under construction !</h2>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+</html>

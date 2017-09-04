@@ -1,0 +1,38 @@
+<section th:fragment="header" th:remove="tag" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="container">
+        <div class="sixteen columns">
+
+            <!-- Logo -->
+            <div id="logo">
+                <h1><a href="/"><img src="/images/logo2.png" alt="Work Scout"/></a></h1>
+            </div>
+
+            <!-- Menu -->
+            <nav id="navigation" class="menu">
+                <ul id="responsive">
+
+                    <li><a href="/">Home</a>
+                    </li>
+
+                    <li><a th:href="@{/under-construction}">About</a>
+                    </li>
+
+                    <li><a th:href="@{/under-construction}">Support</a></li>
+                </ul>
+
+
+                <ul class="float-right">
+                    <li><a href="/registration"><i class="fa fa-user"></i> Sign Up</a></li>
+                    <li><a href="/login"><i class="fa fa-lock"></i> Log In</a></li>
+                </ul>
+
+            </nav>
+
+            <!-- Navigation -->
+            <div id="mobile-navigation">
+                <a href="#menu" class="menu-trigger"><i class="fa fa-reorder"></i> Menu</a>
+            </div>
+
+        </div>
+    </div>
+</section>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<!--&lt;!&ndash;[if IE 8 ]>-->
+<!--<html class="ie ie8" lang="en"> <![endif]&ndash;&gt;-->
+<!--&lt;!&ndash;[if (gte IE 9)|!(IE)]>&lt;!&ndash;>-->
+<!--<html lang="en"> &lt;!&ndash;<![endif]&ndash;&gt;-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/home">
+
+<section layout:fragment="content" th:remove="tag">
+
+    <!-- Titlebar
+    ================================================== -->
+    <div id="titlebar" class="single">
+        <div class="container">
+
+            <div class="sixteen columns">
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li>You are here:</li>
+                        <li><a th:href="@{/admin/candidate-account/__${id}__}">Candidate account</a></li>
+                        <li>Candidate conversations</li>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="container">
+        <!-- Table -->
+        <div class="sixteen columns">
+            <form th:action="@{/admin/conversations/candidate/__${id}__}"
+                  method="post" id="messagesForm" name="messagesForm">
+
+                <div>
+
+                    <table class="manage-table resumes responsive-table" th:if="${pageWrapper.getItems().size() != 0}">
+
+                        <tr th:each="con,rowStat : ${pageWrapper.page.content}">
+                                    <td class="alert-name">
+                                        <a th:href="@{/admin/candidate/conversation/__${con.id}__}">
+                                            <span th:text="*{con.company.name}"></span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/admin/candidate/conversation/__${con.id}__}">
+                                            <span th:text="${con.lastMessage.content}"></span>
+                                        </a>
+                                    </td>
+                                    <td class="keywords">
+                                        <a th:href="@{/admin/candidate/conversation/__${con.id}__}">
+                                            <span th:text="${#temporals.format(con.lastMessage.createdAt, 'EEEE MM-dd-yyyy HH:mm')}"></span>
+                                        </a>
+                                    </td>
+                                    <td class="action">
+                                        <a href="#" class="delete"><i class="fa fa-remove"></i> Delete conversation</a>
+                                    </td>
+                        </tr>
+
+                    </table>
+
+                    <!--<br>-->
+
+                    <!--<a href="#small-dialog" class="popup-with-zoom-anim button">Compose</a>-->
+
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="pagination-container">
+                    <nav class="pagination">
+                        <ul th:if="${pageWrapper.getItems().size() != 0}">
+                            <li th:class="${pageWrapper.hasPreviousPage}? '' : 'disabled'">
+                                <a th:if="${not pageWrapper.hasPreviousPage}">«</a>
+                                <a th:if="${pageWrapper.hasPreviousPage}"
+                                   th:href="'javascript:navigate(' + ${pageWrapper.number-1} + ',' + ${pageWrapper.size} + ')'">
+                                    «</a>
+                            </li>
+                            <li th:each="item : ${pageWrapper.items}"
+                                th:class="${item.current}? 'active' : ''">
+                                <a class="current-page" th:if="${item.current}" th:text="${item.number}">1</a>
+                                <a th:if="${not item.current}"
+                                   th:href="'javascript:navigate(' + ${item.number} + ',' + ${pageWrapper.size} + ')'">
+                                    <span th:text="${item.number}">1</span></a>
+                            </li>
+                            <li th:class="${pageWrapper.hasNextPage}? '' : 'disabled'">
+                                <a th:if="${not pageWrapper.hasNextPage}">»</a>
+                                <a th:if="${pageWrapper.hasNextPage}"
+                                   th:href="'javascript:navigate(' + ${pageWrapper.number+1} + ',' + ${pageWrapper.size} + ')'">»</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <nav class="pagination-next-prev" th:if="${pageWrapper.getItems().size() != 0}">
+                        <ul>
+                            <li th:class="${pageWrapper.firstPage} ? 'disabled' : ''">
+                                <a class="prev" th:if="${pageWrapper.firstPage}">First</a>
+                                <a class="prev" th:if="${not pageWrapper.firstPage}"
+                                   th:href="'javascript:navigate(' + 1 + ',' + ${pageWrapper.size} + ')'">
+                                    Previous</a>
+                            </li>
+
+                            <li th:class="${pageWrapper.lastPage}? 'disabled' : ''">
+                                <a class="next" th:if="${pageWrapper.lastPage}">Last</a>
+                                <a class="next" th:if="${not pageWrapper.lastPage}"
+                                   th:href="'javascript:navigate(' + ${pageWrapper.totalPages} + ',' + ${pageWrapper.size} + ')'">
+                                    Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <!--<div id="small-dialog" class="zoom-anim-dialog mfp-hide apply-popup">-->
+                <!--<div class="small-dialog-headline">-->
+                <!--<h2>Compose</h2>-->
+                <!--</div>-->
+
+                <!--<div class="small-dialog-content">-->
+                <!--<form action="#" method="get">-->
+                <!--&lt;!&ndash; Select &ndash;&gt;-->
+                <!--<select data-placeholder="To" class="chosen-select" multiple="multiple">-->
+                <!--<option value="1">J.Smith a0@a0.cst</option>-->
+                <!--<option value="2">J.Smith a0@a0.cst</option>-->
+                <!--<option value="3">J.Smith a0@a0.cst</option>-->
+                <!--<option value="4">J.Smith a0@a0.cst</option>-->
+                <!--<option value="5">J.Smith a0@a0.cst</option>-->
+                <!--</select>-->
+                <!--<div class="clearfix"></div>-->
+                <!--<div class="margin-top-15"></div>-->
+                <!--<input type="text" placeholder="From" value=""/>-->
+                <!--<input type="text" placeholder="Title" value=""/>-->
+                <!--<textarea class="WYSIWYG" name="summary" cols="20" rows="3" id="summary"-->
+                <!--spellcheck="true" placeholder="Message content"></textarea>-->
+
+                <!--<div class="clearfix"></div>-->
+                <!--<div class="margin-top-15"></div>-->
+
+                <!--<div class="margin-top-20"></div>-->
+                <!--<div class="divider"></div>-->
+
+                <!--<button class="send">SEND</button>-->
+                <!--</form>-->
+                <!--</div>-->
+                <!--</div>-->
+
+                <input type="hidden" name="page"/>
+                <input type="hidden" name="size"/>
+            </form>
+        </div>
+
+    </div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+        var navigate = function (page, size) {
+            debugger;
+            var pageValue = parseInt(page);
+            var sizeValue = parseInt(size);
+            document.messagesForm.page.value = pageValue;
+            document.messagesForm.size.value = sizeValue;
+            document.messagesForm.submit();
+        }
+
+    </script>
+</th:block>
+</html>

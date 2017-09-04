@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/home">
+
+
+<section layout:fragment="content" th:remove="tag">
+
+    <!-- Content
+================================================== -->
+    <form
+            th:action="@{/candidate/edit-account}"
+            th:object="${candidate}"
+            method="post" class="register">
+
+        <!-- Titlebar
+================================================== -->
+        <div id="titlebar" class="resume">
+            <div class="container">
+                <div class="ten columns">
+                    <div class="resume-titlebar">
+                        <div class="resumes-list-content">
+
+                            <div>
+                                <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+                            </div>
+
+                            <h4 th:text="*{name}"><span>Accountant</span></h4>
+
+                            <span class="icons"><i class="fa fa-map-marker"></i></span>
+                            <span class="icons"
+                                  th:text="*{address.city}">
+                                </span>
+                            <span class="icons"
+                                  th:text="*{address.address}">
+                                </span>
+                            <span class="icons"
+                                  th:text="*{address.state.title}">
+                                </span>
+                            <spam class="icons"
+                                  th:text="*{address.zipCode}"/>
+                            <p></p>
+                            <span class="icons"><i class="fa fa-money"></i>$</span>
+                            <span class="icons" th:text="*{hourlyRate}"/>
+                            <span>/ hour</span>
+
+                            <p th:if="*{skills != null}">
+                            <p th:each="skill,rowStat : *{skills}">
+                            <p th:if="*{skills[__${rowStat.index}__] != null}">
+
+                            <div class="skills">
+                                <span th:text="*{skills[__${rowStat.index}__].skill.title}"></span>
+                            </div>
+                            </p>
+                            </p>
+                            </p>
+
+
+                            <div class="clearfix"></div>
+                            <span><i class="ln ln-icon-Stopwatch">Available</i></span>
+                            <span class="icons"
+                                  th:text="*{timePeriod}">
+                                </span>
+                            <div class="clearfix"></div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="two-buttons">
+                        <a href="#small-dialog" class="popup-with-zoom-anim button"><i class="fa fa-envelope"></i>
+                            Download resume</a>
+                    </div>
+
+
+            </div>
+
+
+            <!-- Content
+            ================================================== -->
+            <div class="container">
+                <!-- Widgets -->
+                <div class="eight columns">
+                    <h3 class="margin-bottom-20">Skills</h3>
+
+                    <!-- Resume Table -->
+                    <dl class="resume-table">
+                        <p th:if="*{skills != null}">
+                        <p th:each="skill,rowStat : *{skills}">
+                        <p th:if="*{skills[__${rowStat.index}__] != null}">
+                            <dd>
+                        <p th:text="*{skills[__${rowStat.index}__].skill.title}"></p>
+                        <small class="date">Experience</small>
+                        <small class="date"
+                               th:text="*{skills[__${rowStat.index}__].experienceDuration}"></small>
+                        <small class="date">years</small>
+                        </dd>
+                        </p>
+                        </p>
+                        </p>
+                    </dl>
+
+                    <h3 class="margin-bottom-20">Certifications</h3>
+
+                    <!-- Resume Table -->
+                    <dl class="resume-table">
+                        <p th:if="*{certifications != null}">
+                        <p th:each="soft,rowStat : *{certifications}">
+                        <p th:if="*{certifications[__${rowStat.index}__] != null}">
+                            <dd>
+                        <p th:text="*{certifications[__${rowStat.index}__].title}"></p>
+                        </dd>
+                        </p>
+                        </p>
+                        </p>
+                    </dl>
+
+
+                </div>
+                <div th:if="${#authentication != null and #authorization.expression('hasRole(''ROLE_CANDIDATE'')')}">
+                    <div th:if="*{approved}">
+                        <button id="edit" type="submit" name="edit" class="button big margin-top-5">
+                            Edit<i class="fa fa-arrow-circle-right"></i>
+                        </button>
+                    </div>
+
+
+                    <div th:if="*{!approved}">
+                        <p style="color:red">Your account is not approved yet. You will receive a message as
+                            soon as it
+                            gets approved.
+                            For now just refresh this page and you will get approved.</p>
+                    </div>
+                </div>
+
+                <div th:if="${#authentication != null and #authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                    <a th:href="@{/admin/edit-candidate-account/__${candidate.id}__}"
+                       id="edit-admin" name="edit-admin" class="button big margin-top-5">
+                        Edit<i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                    <div th:if="*{!approved}">
+                        <a th:href="@{/admin/approve_user/__${candidate.id}__}" id="approve-admin"
+                           name="approve-admin" class="button big margin-top-5">
+                            Approve
+                        </a>
+                    </div>
+                    <div th:if="*{approved}">
+                        <a th:href="@{/admin/conversations/candidate/__${candidate.id}__}"
+                           id="conversations-admin" name="approve-admin" class="button big margin-top-5">
+                            Show conversations<i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+</section>
+</html>
+
+

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+	  	http://www.springframework.org/schema/webflow
+	  	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+    <on-start>
+        <evaluate expression="candidateFormService.createCandidate()" result="flowScope.candidate" />
+        <evaluate expression="candidateFormService.getStates()" result="flowScope.states" />
+        <evaluate expression="candidateFormService.getSkillsList()" result="flowScope.skillsList" />
+        <evaluate expression="candidateFormService.getTimePeriods()" result="flowScope.timePeriods" />
+    </on-start>
+
+    <view-state id="stepOne" view="/form-flow-templates/candidate/step-one" model="candidate">
+
+        <transition on="next" to="stepTwo" validate="true" bind="true" />
+
+    </view-state>
+
+    <view-state id="stepTwo" view="/form-flow-templates/candidate/step-two" model="candidate">
+
+        <transition on="updateArea" to="stepTwo" validate="false" bind="true">
+            <evaluate expression="candidateFormService.updateArea(candidate)" result="flowScope.candidate"/>
+        </transition>
+
+        <transition on="back"  to="stepOne"  validate="false" bind="true"/>
+
+        <transition on="next" to="stepFinal" validate="true" bind="true" />
+
+    </view-state>
+
+    <view-state id="stepFinal" view="/form-flow-templates/candidate/step-final" model="candidate">
+
+        <transition on="addSkill" to="stepFinal" validate="true" bind="true">
+            <evaluate expression="candidateFormService.addSkill(candidate)" result="flowScope.candidate"/>
+        </transition>
+
+        <transition on="deleteSkill" to="stepFinal" validate="false" bind="true">
+            <evaluate expression="candidateFormService.deleteSkill(candidate)" result="flowScope.candidate"/>
+        </transition>
+
+        <transition on="back"  to="stepOne"  validate="false" bind="true"/>
+
+        <transition on="uploadResume" to="stepFinal" validate="true" bind="true">
+            <evaluate expression="candidateFormService.uploadResume(candidate, flowRequestContext)"/>
+        </transition>
+
+        <transition on="preview" to="stepPreview" validate="true" bind="true"/>
+
+    </view-state>
+
+    <view-state id="stepPreview" view="/form-flow-templates/candidate/preview" model="candidate">
+
+        <transition on="register" to="end" validate="false" bind="true" history="discard">
+            <evaluate expression="candidateFormService.saveCandidate(candidate)"/>
+        </transition>
+
+        <transition on="back"  to="stepFinal"  validate="false" bind="true"/>
+
+    </view-state>
+
+    <end-state id="end" view="externalRedirect:login"/>
+
+</flow>
+
