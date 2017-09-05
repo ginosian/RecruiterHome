@@ -43,18 +43,21 @@ public class Conversation extends AbstractEntity implements Serializable {
 
     // region Constructors
 
-    public Conversation() {
+    public Conversation(String ssn) {
+        super(ssn);
     }
 
     public Conversation(Company company,
             Candidate candidate,
-            Interview interview) {
+            Interview interview, String ssn) {
+        super(ssn);
         this.company = company;
         this.candidate = candidate;
         this.interview = interview;
     }
 
-    public Conversation(Company company, Candidate candidate) {
+    public Conversation(Company company, Candidate candidate, String ssn) {
+        super(ssn);
         this.company = company;
         this.candidate = candidate;
     }

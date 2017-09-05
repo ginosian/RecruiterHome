@@ -56,14 +56,14 @@ public class AdminFormServiceImpl extends AbstractFormServiceImpl implements Adm
         finalAdmin.setEnabled(false);
         finalAdmin = (Administrator) extendedUserDetailService.save(finalAdmin);
 
-        VerificationToken verificationToken = applyForVerification(finalAdmin, finalAdmin.getFullName());
+        VerificationToken verificationToken = applyForVerification(finalAdmin, finalAdmin.getName());
         emailService.sendCompanyAccountCreation(finalAdmin.getUsername(), finalAdmin.getUsername(), verificationToken.getToken());
     }
 
     @Override
     public void updateAdmin(AdminFormModel admin) {
         Administrator finalAdmin = admin.getAdmin();
-        if (!StringUtils.isNullOrEmpty(admin.getNewName())) finalAdmin.setFullName(admin.getNewName());
+        if (!StringUtils.isNullOrEmpty(admin.getNewName())) finalAdmin.setName(admin.getNewName());
         if (!StringUtils.isNullOrEmpty(admin.getNewPassword())) finalAdmin.setPassword(admin.getNewPassword());
         finalAdmin.correctStrings();
         extendedUserDetailService.save(finalAdmin);

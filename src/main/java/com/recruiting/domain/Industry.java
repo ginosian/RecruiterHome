@@ -13,13 +13,14 @@ public class Industry extends AbstractTitledEntity implements Serializable {
 
 
     // region Constructors
-    public Industry() {
+
+    public Industry(String ssn) {
+        super(ssn);
     }
 
-    public Industry(String title) {
-        super(title);
+    public Industry(String ssn, String title) {
+        super(ssn, title);
     }
-
     // endregion
 
     //region Overrides

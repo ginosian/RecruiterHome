@@ -12,11 +12,12 @@ import java.io.Serializable;
 public class Skill extends AbstractTitledEntity implements Serializable {
 
     // region Constructors
-    public Skill() {
+    public Skill(String ssn) {
+        super(ssn);
     }
 
-    public Skill(String title) {
-        super(title);
+    public Skill(String ssn, String title) {
+        super(ssn, title);
     }
     // endregion
 

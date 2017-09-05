@@ -75,7 +75,8 @@ public class User extends AbstractEntity implements UserDetails {
     public User(String username,
             String password,
             Boolean enabled,
-            List<Authority> grantedAuthorities, Address address) {
+            List<Authority> grantedAuthorities, Address address, String ssn) {
+        super(ssn);
         this.username = username;
         this.password = password;
         this.enabled = enabled;

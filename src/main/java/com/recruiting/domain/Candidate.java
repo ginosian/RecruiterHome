@@ -76,8 +76,8 @@ public class Candidate extends User implements Serializable {
             List<Certifications> certifications,
             List<Area> areas,
             List<Message> receivedMessages,
-            Date startingDate) {
-        super(username, password, isEnabled, grantedAuthorities, address);
+            Date startingDate, String ssn) {
+        super(username, password, isEnabled, grantedAuthorities, address, ssn);
         super.setName(name);
         this.birthDate = birthDate;
         this.timePeriod = timePeriod;

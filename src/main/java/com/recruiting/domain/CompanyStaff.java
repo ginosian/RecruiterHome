@@ -30,15 +30,16 @@ public class CompanyStaff extends AbstractEntity implements Serializable {
     // endregion
 
     // region Constructors
-    public CompanyStaff() {
+    public CompanyStaff(String ssn) {
+        super(ssn);
     }
 
-    public CompanyStaff(String name, String phone, String email) {
+    public CompanyStaff(String name, String phone, String email, String ssn) {
+        super(ssn);
         this.name = name;
         this.phone = phone;
         this.email = email;
     }
-
     // endregion
 
     // region Transient Methods

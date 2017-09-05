@@ -1,10 +1,12 @@
 package com.recruiting.domain;
 
 import com.recruiting.converter.LocalDateTimeAttributeConverter;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Created by Martha on 4/5/2017.
@@ -17,6 +19,10 @@ public abstract class AbstractEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     protected Long id;
+
+    @NaturalId
+    @Column(name = "ssn")
+    private String ssn;
 
     @Convert(converter = LocalDateTimeAttributeConverter.class)
 //    @CreationTimestamp
@@ -34,6 +40,11 @@ public abstract class AbstractEntity implements Serializable {
     // region Constructors
     public AbstractEntity() {
     }
+
+    public AbstractEntity(String ssn) {
+        this.ssn = ssn;
+    }
+
     // endregion
 
     // region Transient methods
@@ -82,22 +93,34 @@ public abstract class AbstractEntity implements Serializable {
         this.id = id;
     }
 
+    public String getSsn() {
+        return ssn;
+    }
+
+    public void setSsn(String ssn) {
+        this.ssn = ssn;
+    }
+
     // endregion
 
 
     // region Hashcode/equals/toString overrides
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof AbstractEntity)) return false;
-        Long id = this.getId();
-        return (id != null && id.equals(((AbstractEntity) obj).getId())) || super.equals(obj);
-    }
 
     @Override
     public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getId() != null ? getId().hashCode() : 0);
-        return result;
+        return Objects.hash( ssn);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if ( this == o ) {
+            return true;
+        }
+        if ( !( o instanceof AbstractEntity ) ) {
+            return false;
+        }
+        AbstractEntity entity = (AbstractEntity) o;
+        return Objects.equals( ssn, entity.ssn );
     }
     // endregion
 }

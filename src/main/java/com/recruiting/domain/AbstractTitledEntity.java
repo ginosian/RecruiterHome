@@ -21,7 +21,12 @@ public class AbstractTitledEntity extends AbstractEntity implements Serializable
     public AbstractTitledEntity() {
     }
 
-    public AbstractTitledEntity(String title) {
+    public AbstractTitledEntity(String ssn) {
+        super(ssn);
+    }
+
+    public AbstractTitledEntity(String ssn, String title) {
+        super(ssn);
         this.title = title;
     }
     // endregion

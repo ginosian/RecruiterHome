@@ -24,9 +24,11 @@ public class Authority extends AbstractEntity implements GrantedAuthority {
     public Authority() {
     }
 
-    public Authority(String role) {
+    public Authority(String ssn, String role) {
+        super(ssn);
         this.role = role;
     }
+
     // endregion
 
     // region Transient methods

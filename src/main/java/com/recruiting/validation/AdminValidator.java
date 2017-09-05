@@ -35,8 +35,8 @@ public class AdminValidator extends AbstractProfileInfoValidation implements Val
         Administrator admin = adminModel.getAdmin();
         String newName = adminModel.getNewName();
         if (adminModel.isSignedInUser()) {
-            if (!newName.equals(admin.getFullName())) validateName(newName, "newName", errors);
-        } else validateName(admin.getFullName(), "admin.name", errors);
+            if (!newName.equals(admin.getName())) validateName(newName, "newName", errors);
+        } else validateName(admin.getName(), "admin.name", errors);
 
         String adminUsername = admin.getUsername();
         String adminInitialUsername = adminModel.getInitialUsername();

@@ -41,8 +41,8 @@ public class Message extends AbstractTitledEntity implements Serializable {
             Boolean seen,
             User author,
             User receiver,
-            Conversation conversation) {
-        super(title);
+            Conversation conversation, String ssn) {
+        super(ssn, title);
         this.content = content;
         this.seen = seen;
         this.author = author;

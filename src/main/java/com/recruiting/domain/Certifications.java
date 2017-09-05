@@ -12,13 +12,14 @@ import java.io.Serializable;
 public class Certifications extends AbstractTitledEntity implements Serializable {
 
     // region Constructors
-    public Certifications() {
+
+    public Certifications(String ssn) {
+        super(ssn);
     }
 
-    public Certifications(String title) {
-        super(title);
+    public Certifications(String ssn, String title) {
+        super(ssn, title);
     }
-
     // endregion
 
 

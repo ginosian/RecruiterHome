@@ -27,10 +27,12 @@ public class VerificationToken extends AbstractEntity implements Serializable {
 
     // standard constructors, getters and setters
 
-    public VerificationToken() {
+    public VerificationToken(String ssn) {
+        super(ssn);
     }
 
-    public VerificationToken(String token, User user, LocalDateTime expiryDate) {
+    public VerificationToken(String token, User user, LocalDateTime expiryDate, String ssn) {
+        super(ssn);
         this.token = token;
         this.user = user;
         this.expiryDate = expiryDate;

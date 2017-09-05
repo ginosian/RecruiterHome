@@ -24,134 +24,134 @@ public class DataLoader {
     public static final int DELAY = 400;
 
     public static final Certifications[] soft = new Certifications[]{
-            new Certifications("Microsoft Dynamics"),
-            new Certifications("Oracle"),
-            new Certifications("SAP"),
-            new Certifications("QuickBooks"),
-            new Certifications("NetSuite"),
-            new Certifications("Sage(Peachtree)"),
-            new Certifications("SAP Business One")};
+            new Certifications(BusKeyGen.nextKey(), "Microsoft Dynamics"),
+            new Certifications(BusKeyGen.nextKey(), "Oracle"),
+            new Certifications(BusKeyGen.nextKey(), "SAP"),
+            new Certifications(BusKeyGen.nextKey(), "QuickBooks"),
+            new Certifications(BusKeyGen.nextKey(), "NetSuite"),
+            new Certifications(BusKeyGen.nextKey(), "Sage(Peachtree)"),
+            new Certifications(BusKeyGen.nextKey(), "SAP Business One")};
 
     public static final Area[] AREAS = new Area[]{
-            new Area("San Francisco"),
-            new Area("Peninsula"),
-            new Area("South Bay"),
-            new Area("North Bay"),
-            new Area("East Bay")};
+            new Area(BusKeyGen.nextKey(), "San Francisco"),
+            new Area(BusKeyGen.nextKey(), "Peninsula"),
+            new Area(BusKeyGen.nextKey(), "South Bay"),
+            new Area(BusKeyGen.nextKey(), "North Bay"),
+            new Area(BusKeyGen.nextKey(), "East Bay")};
 
     // region Industries
 
     public static final Industry[] INDUSTRIES = new Industry[]{
-            new Industry("Advertising and Marketing"),
-            new Industry("Aerospace and Defense"),
-            new Industry("Automotive"),
-            new Industry("Biotechnology"),
-            new Industry("CleanTech"),
-            new Industry("Consumer goods"),
-            new Industry("Education"),
-            new Industry("Electronics"),
-            new Industry("Energy"),
-            new Industry("Entertainment"),
-            new Industry("Financial Services"),
-            new Industry("FinTech"),
-            new Industry("Healthcare"),
-            new Industry("HealthTech"),
-            new Industry("Information Technology"),
-            new Industry("Internet"),
-            new Industry("Life Scinces"),
-            new Industry("Manufacturing"),
-            new Industry("Media"),
-            new Industry("Medical Devices"),
-            new Industry("Networking"),
-            new Industry("Pharmaceuticals"),
-            new Industry("Real estate"),
-            new Industry("Retail"),
-            new Industry("SaaS"),
-            new Industry("Semiconductor"),
-            new Industry("Services"),
-            new Industry("Social Media"),
-            new Industry("Certifications"),
-            new Industry("Technology"),
-            new Industry("Telecommunications"),
-            new Industry("Transportation and Logistics"),
-            new Industry("Other")};
+            new Industry(BusKeyGen.nextKey(), "Advertising and Marketing"),
+            new Industry(BusKeyGen.nextKey(), "Aerospace and Defense"),
+            new Industry(BusKeyGen.nextKey(), "Automotive"),
+            new Industry(BusKeyGen.nextKey(), "Biotechnology"),
+            new Industry(BusKeyGen.nextKey(), "CleanTech"),
+            new Industry(BusKeyGen.nextKey(), "Consumer goods"),
+            new Industry(BusKeyGen.nextKey(), "Education"),
+            new Industry(BusKeyGen.nextKey(), "Electronics"),
+            new Industry(BusKeyGen.nextKey(), "Energy"),
+            new Industry(BusKeyGen.nextKey(), "Entertainment"),
+            new Industry(BusKeyGen.nextKey(), "Financial Services"),
+            new Industry(BusKeyGen.nextKey(), "FinTech"),
+            new Industry(BusKeyGen.nextKey(), "Healthcare"),
+            new Industry(BusKeyGen.nextKey(), "HealthTech"),
+            new Industry(BusKeyGen.nextKey(), "Information Technology"),
+            new Industry(BusKeyGen.nextKey(), "Internet"),
+            new Industry(BusKeyGen.nextKey(), "Life Scinces"),
+            new Industry(BusKeyGen.nextKey(), "Manufacturing"),
+            new Industry(BusKeyGen.nextKey(), "Media"),
+            new Industry(BusKeyGen.nextKey(), "Medical Devices"),
+            new Industry(BusKeyGen.nextKey(), "Networking"),
+            new Industry(BusKeyGen.nextKey(), "Pharmaceuticals"),
+            new Industry(BusKeyGen.nextKey(), "Real estate"),
+            new Industry(BusKeyGen.nextKey(), "Retail"),
+            new Industry(BusKeyGen.nextKey(), "SaaS"),
+            new Industry(BusKeyGen.nextKey(), "Semiconductor"),
+            new Industry(BusKeyGen.nextKey(), "Services"),
+            new Industry(BusKeyGen.nextKey(), "Social Media"),
+            new Industry(BusKeyGen.nextKey(), "Certifications"),
+            new Industry(BusKeyGen.nextKey(), "Technology"),
+            new Industry(BusKeyGen.nextKey(), "Telecommunications"),
+            new Industry(BusKeyGen.nextKey(), "Transportation and Logistics"),
+            new Industry(BusKeyGen.nextKey(), "Other")};
 
     // endregion
 
     // region SKILLS
     public static final Skill[] SKILLS = new Skill[]{
-            new Skill("Accounting – Accounting Manager"),
-            new Skill("Accounting – Accounts Payable"),
-            new Skill("Accounting – Accounts Receivable"),
-            new Skill("Accounting – Ad Hoc Projects"),
-            new Skill("Accounting – Assistant Controller"),
-            new Skill("Accounting – Business Combinations"),
-            new Skill("Accounting – Consolidations"),
-            new Skill("Accounting – Cost Accountant"),
-            new Skill("Accounting – Director of Accounting"),
-            new Skill("Accounting – Fixed Assets"),
-            new Skill("Accounting – General Ledger Accountant"),
-            new Skill("Accounting – General Ledger Manager"),
-            new Skill("Accounting – International Consolidations"),
-            new Skill("Accounting – Inventory"),
-            new Skill("Accounting – Leases"),
-            new Skill("Accounting – New Lease Standard, Implementation"),
-            new Skill("Accounting – New Revenue Recognition, Implementation"),
-            new Skill("Accounting – Operating Expenses"),
-            new Skill("Accounting – Payroll and Benefits"),
-            new Skill("Accounting – Revenue Analyst"),
-            new Skill("Accounting – Revenue Analyst (Contract Accounting)"),
-            new Skill("Accounting – Revenue Analyst (SaaS)"),
-            new Skill("Accounting – Revenue Analyst (Certifications)"),
-            new Skill("Accounting – Revenue Director"),
-            new Skill("Accounting – Revenue Director (Contract Accounting)"),
-            new Skill("Accounting – Revenue Director (SaaS)"),
-            new Skill("Accounting – Revenue Director (Certifications)"),
-            new Skill("Accounting – Revenue Manager"),
-            new Skill("Accounting – Revenue Manager (Contract Accounting)"),
-            new Skill("Accounting – Revenue Manager (SaaS)"),
-            new Skill("Accounting – Revenue Manager (Certifications)"),
-            new Skill("Accounting – Revenue Sr. Manager"),
-            new Skill("Accounting – Revenue Sr. Manager (Contract Accounting)"),
-            new Skill("Accounting – Revenue Sr. Manager (SaaS)"),
-            new Skill("Accounting – Revenue Sr. Manager (Certifications)"),
-            new Skill("Accounting – Senior Accountant"),
-            new Skill("Accounting – Stock Based Compensation"),
-            new Skill("Accounting – Technical Accounting Director"),
-            new Skill("Accounting – Technical Accounting Manager"),
-            new Skill("Accounting – Technical Accounting Sr. Associate"),
-            new Skill("Accounting – Technical Accounting Sr. Manager"),
-            new Skill("Financial Reporting – Cash Flow Statements"),
-            new Skill("Financial Reporting – Private Company Financial Statements"),
-            new Skill("FP&A – Director"),
-            new Skill("FP&A – Manager"),
-            new Skill("FP&A – Senior Analyst"),
-            new Skill("FP&A – Sr. Manager"),
-            new Skill("Internal Audit – Director"),
-            new Skill("Internal Audit – Sr. Manager"),
-            new Skill("Internal Audit – Manager"),
-            new Skill("Internal Controls (Public) – Testing (IT Application Controls)"),
-            new Skill("Internal Controls (Public) – Testing (IT General Controls)"),
-            new Skill("Internal Controls (Public) – Testing (non-IT)"),
-            new Skill("Internal Controls (Public) – Testing, Project Manager"),
-            new Skill("Internal Controls Implementation – Process and Controls (IT Application Controls)"),
-            new Skill("Internal Controls Implementation – Process and Controls (IT General Controls)"),
-            new Skill("Internal Controls Implementation – Process and Controls (non-IT)"),
-            new Skill("Internal Controls Implementation – Project Manager"),
-            new Skill("Management – Interim CFO"),
-            new Skill("Management – Interim VP of Finance"),
-            new Skill("SEC Reporting – 10-K/Q, Director"),
-            new Skill("SEC Reporting – 10-K/Q, Sr. Manager"),
-            new Skill("SEC Reporting – 10-K/Q, Manager"),
-            new Skill("SEC Reporting – 10-K/Q, Senior Associate"),
-            new Skill("SEC Reporting – Other Forms (e.g. S-3, S-4, S-8)"),
-            new Skill("Tax – Franchise Tax"),
-            new Skill("Tax – Income Tax Provisions"),
-            new Skill("Tax – Income Tax Returns"),
-            new Skill("Valuations – 409A reports"),
-            new Skill("Valuations – Assets other than Real Estate"),
-            new Skill("Valuations – Real Estate"),
-            new Skill("Other (please spcify)")};
+            new Skill(BusKeyGen.nextKey(), "Accounting – Accounting Manager"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Accounts Payable"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Accounts Receivable"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Ad Hoc Projects"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Assistant Controller"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Business Combinations"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Consolidations"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Cost Accountant"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Director of Accounting"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Fixed Assets"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – General Ledger Accountant"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – General Ledger Manager"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – International Consolidations"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Inventory"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Leases"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – New Lease Standard, Implementation"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – New Revenue Recognition, Implementation"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Operating Expenses"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Payroll and Benefits"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Revenue Analyst"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Revenue Analyst (Contract Accounting)"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Revenue Analyst (SaaS)"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Revenue Analyst (Certifications)"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Revenue Director"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Revenue Director (Contract Accounting)"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Revenue Director (SaaS)"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Revenue Director (Certifications)"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Revenue Manager"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Revenue Manager (Contract Accounting)"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Revenue Manager (SaaS)"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Revenue Manager (Certifications)"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Revenue Sr. Manager"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Revenue Sr. Manager (Contract Accounting)"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Revenue Sr. Manager (SaaS)"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Revenue Sr. Manager (Certifications)"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Senior Accountant"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Stock Based Compensation"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Technical Accounting Director"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Technical Accounting Manager"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Technical Accounting Sr. Associate"),
+            new Skill(BusKeyGen.nextKey(), "Accounting – Technical Accounting Sr. Manager"),
+            new Skill(BusKeyGen.nextKey(), "Financial Reporting – Cash Flow Statements"),
+            new Skill(BusKeyGen.nextKey(), "Financial Reporting – Private Company Financial Statements"),
+            new Skill(BusKeyGen.nextKey(), "FP&A – Director"),
+            new Skill(BusKeyGen.nextKey(), "FP&A – Manager"),
+            new Skill(BusKeyGen.nextKey(), "FP&A – Senior Analyst"),
+            new Skill(BusKeyGen.nextKey(), "FP&A – Sr. Manager"),
+            new Skill(BusKeyGen.nextKey(), "Internal Audit – Director"),
+            new Skill(BusKeyGen.nextKey(), "Internal Audit – Sr. Manager"),
+            new Skill(BusKeyGen.nextKey(), "Internal Audit – Manager"),
+            new Skill(BusKeyGen.nextKey(), "Internal Controls (Public) – Testing (IT Application Controls)"),
+            new Skill(BusKeyGen.nextKey(), "Internal Controls (Public) – Testing (IT General Controls)"),
+            new Skill(BusKeyGen.nextKey(), "Internal Controls (Public) – Testing (non-IT)"),
+            new Skill(BusKeyGen.nextKey(), "Internal Controls (Public) – Testing, Project Manager"),
+            new Skill(BusKeyGen.nextKey(), "Internal Controls Implementation – Process and Controls (IT Application Controls)"),
+            new Skill(BusKeyGen.nextKey(), "Internal Controls Implementation – Process and Controls (IT General Controls)"),
+            new Skill(BusKeyGen.nextKey(), "Internal Controls Implementation – Process and Controls (non-IT)"),
+            new Skill(BusKeyGen.nextKey(), "Internal Controls Implementation – Project Manager"),
+            new Skill(BusKeyGen.nextKey(), "Management – Interim CFO"),
+            new Skill(BusKeyGen.nextKey(), "Management – Interim VP of Finance"),
+            new Skill(BusKeyGen.nextKey(), "SEC Reporting – 10-K/Q, Director"),
+            new Skill(BusKeyGen.nextKey(), "SEC Reporting – 10-K/Q, Sr. Manager"),
+            new Skill(BusKeyGen.nextKey(), "SEC Reporting – 10-K/Q, Manager"),
+            new Skill(BusKeyGen.nextKey(), "SEC Reporting – 10-K/Q, Senior Associate"),
+            new Skill(BusKeyGen.nextKey(), "SEC Reporting – Other Forms (e.g. S-3, S-4, S-8)"),
+            new Skill(BusKeyGen.nextKey(), "Tax – Franchise Tax"),
+            new Skill(BusKeyGen.nextKey(), "Tax – Income Tax Provisions"),
+            new Skill(BusKeyGen.nextKey(), "Tax – Income Tax Returns"),
+            new Skill(BusKeyGen.nextKey(), "Valuations – 409A reports"),
+            new Skill(BusKeyGen.nextKey(), "Valuations – Assets other than Real Estate"),
+            new Skill(BusKeyGen.nextKey(), "Valuations – Real Estate"),
+            new Skill(BusKeyGen.nextKey(), "Other (please spcify)")};
 
     // endregion
 
@@ -1937,11 +1937,11 @@ public class DataLoader {
     // region Init data
 
     public static void createRoles(GenericCrudService genericCrudService) {
-        Authority adminRole = (Authority) genericCrudService.save(new Authority("ADMIN"));
-        Authority companyRole = (Authority) genericCrudService.save(new Authority("COMPANY"));
-        Authority companyLockedRole = (Authority) genericCrudService.save(new Authority("COMPANY_LOCKED"));
-        Authority candidateRole = (Authority) genericCrudService.save(new Authority("CANDIDATE"));
-        Authority candidateLockedRole = (Authority) genericCrudService.save(new Authority("CANDIDATE_LOCKED"));
+        Authority adminRole = (Authority) genericCrudService.save(new Authority(BusKeyGen.nextKey(), "ADMIN"));
+        Authority companyRole = (Authority) genericCrudService.save(new Authority(BusKeyGen.nextKey(), "COMPANY"));
+        Authority companyLockedRole = (Authority) genericCrudService.save(new Authority(BusKeyGen.nextKey(), "COMPANY_LOCKED"));
+        Authority candidateRole = (Authority) genericCrudService.save(new Authority(BusKeyGen.nextKey(), "CANDIDATE"));
+        Authority candidateLockedRole = (Authority) genericCrudService.save(new Authority(BusKeyGen.nextKey(), "CANDIDATE_LOCKED"));
 
         CANDIDATE_ROLE_LIST = new ArrayList<>();
         CANDIDATE_ROLE_LIST.add(candidateRole);
@@ -1978,7 +1978,7 @@ public class DataLoader {
     }
 
     public static void createStates(GenericCrudService genericCrudService) {
-        State state = new State("California");
+        State state = new State(BusKeyGen.nextKey(), "California");
         for (Area area : AREAS) {
             state.setArea(area);
         }
@@ -2026,7 +2026,7 @@ public class DataLoader {
                 randomStreet(),
                 randomCity(),
                 state,
-                randomZip());
+                randomZip(), BusKeyGen.nextKey());
     }
 
     private static String randomCity() {
@@ -2067,7 +2067,7 @@ public class DataLoader {
     private static CandidateSkill randomSkill() {
         int lim = SKILLS.length - 1;
         int rand = RANDOM.nextInt(lim);
-        return new CandidateSkill(SKILLS[rand], randomExperienceDuration());
+        return new CandidateSkill(SKILLS[rand], randomExperienceDuration(), BusKeyGen.nextKey());
     }
 
     private static List<Area> randomAreaList() {
@@ -2156,7 +2156,8 @@ public class DataLoader {
                 randomAccountingCertifications(),
                 randomAreaList(),
                 null,
-                randomStartingDate());
+                randomStartingDate(),
+                BusKeyGen.nextKey());
         candidate.setApproved(false);
         try {
             candidate = (Candidate) genericCrudService.save(candidate);
@@ -2182,7 +2183,8 @@ public class DataLoader {
                 randomAccountingCertifications(),
                 randomAreaList(),
                 null,
-                randomStartingDate());
+                randomStartingDate(),
+                BusKeyGen.nextKey());
         candidate.setApproved(false);
         try {
             candidate = (Candidate) genericCrudService.save(candidate);
@@ -2212,7 +2214,8 @@ public class DataLoader {
                 randomPhoneNumber(),
                 randomAddress(),
                 randomCompanyStaff(),
-                randomAddresses()
+                randomAddresses(),
+                BusKeyGen.nextKey()
         );
         company.setApproved(false);
         try {
@@ -2236,7 +2239,8 @@ public class DataLoader {
                 randomPhoneNumber(),
                 randomAddress(),
                 randomCompanyStaff(),
-                randomAddresses()
+                randomAddresses(),
+                BusKeyGen.nextKey()
         );
         company.setApproved(false);
         try {
@@ -2261,7 +2265,9 @@ public class DataLoader {
         return new CompanyStaff(
                 "John Smith",
                 randomPhoneNumber(),
-                "staff@staff.com"
+                "staff@staff.com",
+                BusKeyGen.nextKey()
+
         );
     }
 
@@ -2280,7 +2286,7 @@ public class DataLoader {
             CommunicationService messagingService) {
         Candidate candidate = candidateService.findByUsername(candidateUsername);
         Company company = companyService.findByUsername(companyUsername);
-        Conversation conversation = new Conversation(company, candidate);
+        Conversation conversation = new Conversation(company, candidate, BusKeyGen.nextKey());
         Interview interview = createInterview();
         try {
             Message companyInitialMessage = new Message(
@@ -2289,7 +2295,8 @@ public class DataLoader {
                     true,
                     company,
                     candidate,
-                    conversation);
+                    conversation,
+                    BusKeyGen.nextKey());
             interview.setCompanyMessage(companyInitialMessage);
             interview.setRejected(false);
             interview.setAccepted(false);
@@ -2303,7 +2310,8 @@ public class DataLoader {
                     true,
                     candidate,
                     company,
-                    conversation);
+                    conversation,
+                    BusKeyGen.nextKey());
 
             interview.setAccepted(accepted);
             interview.setCandidateResponse(candidateInitialMessage);
@@ -2320,7 +2328,8 @@ public class DataLoader {
                                     false,
                                     company,
                                     candidate,
-                                    conversation);
+                                    conversation,
+                                    BusKeyGen.nextKey());
                     conversation.setLastMessage(companyLastMessage);
                     conversation = messagingService.updateMessage(conversation);
 
@@ -2332,7 +2341,8 @@ public class DataLoader {
                                     false,
                                     candidate,
                                     company,
-                                    conversation);
+                                    conversation,
+                                    BusKeyGen.nextKey());
                     conversation.setLastMessage(candidateLastMessage);
                     conversation = messagingService.updateMessage(conversation);
                     continue;
@@ -2345,7 +2355,8 @@ public class DataLoader {
                                 true,
                                 company,
                                 candidate,
-                                conversation);
+                                conversation,
+                                BusKeyGen.nextKey());
                 conversation.setLastMessage(companyMessage);
                 conversation = messagingService.updateMessage(conversation);
 
@@ -2357,7 +2368,8 @@ public class DataLoader {
                                 true,
                                 candidate,
                                 company,
-                                conversation);
+                                conversation,
+                                BusKeyGen.nextKey());
                 conversation.setLastMessage(candidateMessage);
                 conversation = messagingService.updateMessage(conversation);
             }
@@ -2369,7 +2381,7 @@ public class DataLoader {
 
     public static Interview createInterview() {
 
-        Interview interview = new Interview();
+        Interview interview = new Interview(BusKeyGen.nextKey());
         interview.setInterviewDate(randomLocalDateAndTime());
         interview.setInterviewDateOptional1(randomLocalDateAndTime());
         interview.setInterviewDateOptional2(randomLocalDateAndTime());
@@ -2392,7 +2404,8 @@ public class DataLoader {
                 true,
                 ADMIN_ROLE_LIST,
                 randomAddress(),
-                "Admin Adminyan"
+                "Admin Adminyan",
+                BusKeyGen.nextKey()
         );
         administrator = (Administrator) genericCrudService.save(administrator);
         return administrator;

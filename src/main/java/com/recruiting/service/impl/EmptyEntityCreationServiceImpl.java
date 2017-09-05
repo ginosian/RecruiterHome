@@ -24,7 +24,8 @@ public class EmptyEntityCreationServiceImpl implements EmptyEntityCreationServic
     @Override
     public Address emptyAddress() {
         Address mainAddress = new Address();
-        State state = new State();
+        mainAddress.setSsn(BusKeyGen.nextKey());
+        State state = new State(BusKeyGen.nextKey());
         mainAddress.setState(state);
         return mainAddress;
     }
@@ -41,6 +42,7 @@ public class EmptyEntityCreationServiceImpl implements EmptyEntityCreationServic
     public Company emptyCompany(String role) {
         //Creates Company entity
         Company company = new Company();
+        company.setSsn(BusKeyGen.nextKey());
 
         //Grants company with authorities and permissions
         company.setGrantedAuthorities(authorities(role));
@@ -60,12 +62,13 @@ public class EmptyEntityCreationServiceImpl implements EmptyEntityCreationServic
 
     @Override
     public Industry emptyIndustry() {
-        return new Industry();
+        return new Industry(BusKeyGen.nextKey());
     }
 
     @Override
     public CompanyStaff emptyCompanyStaff() {
-        return new CompanyStaff();
+        CompanyStaff companyStaff =  new CompanyStaff(BusKeyGen.nextKey());
+        return companyStaff;
     }
 
 
@@ -73,6 +76,7 @@ public class EmptyEntityCreationServiceImpl implements EmptyEntityCreationServic
     public Candidate emptyCandidate(String role) {
         //Creates Company entity
         Candidate candidate = new Candidate();
+        candidate.setSsn(BusKeyGen.nextKey());
 
         //Grants company with authorities and permissions
         candidate.setGrantedAuthorities(authorities(role));
@@ -94,25 +98,25 @@ public class EmptyEntityCreationServiceImpl implements EmptyEntityCreationServic
 
     @Override
     public CandidateSkill emptyCandidateSkill() {
-        CandidateSkill candidateSkill = new CandidateSkill();
-        Skill skill = new Skill();
+        CandidateSkill candidateSkill = new CandidateSkill(BusKeyGen.nextKey());
+        Skill skill = new Skill(BusKeyGen.nextKey());
         candidateSkill.setSkill(skill);
         return candidateSkill;
     }
 
     @Override
     public Certifications emptyAccountingCertifications() {
-        return new Certifications();
+        return   new Certifications(BusKeyGen.nextKey());
     }
 
     @Override
     public File emptyFile() {
-        return new File();
+        return new File(BusKeyGen.nextKey());
     }
 
     @Override
     public Interview emptyInterview() {
-        Interview interview = new Interview();
+        Interview interview = new Interview(BusKeyGen.nextKey());
         interview.setRejected(false);
         interview.setAccepted(false);
         interview.setCompanyMessage(emptyMessage());
@@ -123,18 +127,19 @@ public class EmptyEntityCreationServiceImpl implements EmptyEntityCreationServic
     @Override
     public Message emptyMessage() {
         Message message = new Message();
+        message.setSsn(BusKeyGen.nextKey());
         message.setSeen(false);
         return message;
     }
 
     @Override
     public Conversation emptyConversation() {
-        return new Conversation();
+        return new Conversation(BusKeyGen.nextKey());
     }
 
     @Override
     public VerificationToken emptyVerificationToken() {
-        VerificationToken verificationToken = new VerificationToken();
+        VerificationToken verificationToken = new VerificationToken(BusKeyGen.nextKey());
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expirationDate = now.plusMinutes(Constants.VERIFICATION_TOKEN_EXPIRATION_MINUTES);
         verificationToken.setExpiryDate(expirationDate);
@@ -145,7 +150,7 @@ public class EmptyEntityCreationServiceImpl implements EmptyEntityCreationServic
 
     @Override
     public PasswordResetToken emptyPasswordResetToken() {
-        PasswordResetToken passwordResetToken = new PasswordResetToken();
+        PasswordResetToken passwordResetToken = new PasswordResetToken(BusKeyGen.nextKey());
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expirationDate = now.plusMinutes(Constants.PASSWORD_RESET_TOKEN_EXPIRATION_MINUTES);
         passwordResetToken.setExpiryDate(expirationDate);
@@ -157,7 +162,7 @@ public class EmptyEntityCreationServiceImpl implements EmptyEntityCreationServic
     public Administrator emptyAdmin() {
         //Creates Admin entity
         Administrator administrator = new Administrator();
-
+        administrator.setSsn(BusKeyGen.nextKey());
         //Grants admin with authorities and permissions
         administrator.setGrantedAuthorities(authorities("ADMIN"));
         administrator.setAccountNonExpired(true);

@@ -45,13 +45,18 @@ public class Interview extends AbstractEntity implements Serializable { //TODO  
     // endregion
 
     // region Constructors
-    public Interview() {
+
+
+    public Interview(String ssn) {
+        super(ssn);
     }
 
     public Interview(Boolean rejected,
             LocalDateTime interviewDate,
             LocalDateTime interviewDateOptional1,
-            LocalDateTime interviewDateOptional2) {
+            LocalDateTime interviewDateOptional2,
+            String ssn) {
+        super(ssn);
         this.rejected = rejected;
         this.interviewDate = interviewDate;
         this.interviewDateOptional1 = interviewDateOptional1;

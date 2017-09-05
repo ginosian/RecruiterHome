@@ -33,7 +33,12 @@ public class Address extends AbstractEntity implements Serializable {
     public Address() {
     }
 
-    public Address(String address, String city, State state, Integer zipCode) {
+    public Address(String ssn) {
+        super(ssn);
+    }
+
+    public Address(String address, String city, State state, Integer zipCode, String ssn) {
+        super(ssn);
         this.address = address;
         this.city = city;
         this.state = state;

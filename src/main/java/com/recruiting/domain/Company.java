@@ -49,8 +49,8 @@ public class Company extends User implements Serializable {
             String phone,
             Address address,
             CompanyStaff mainContact,
-            List<Address> addresses) {
-        super(username, password, isEnabled, grantedAuthorities, address);
+            List<Address> addresses, String ssn) {
+        super(username, password, isEnabled, grantedAuthorities, address, ssn);
         super.setName(name);
         this.industry = industry;
         this.phone = phone;

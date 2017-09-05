@@ -22,10 +22,13 @@ public class CandidateSkill extends AbstractEntity implements Serializable {
     // endregion
 
     // region Constructors
-    public CandidateSkill() {
+
+    public CandidateSkill(String ssn) {
+        super(ssn);
     }
 
-    public CandidateSkill(Skill skill, Integer experienceDuration) {
+    public CandidateSkill(Skill skill, Integer experienceDuration, String ssn) {
+        super(ssn);
         this.skill = skill;
         this.experienceDuration = experienceDuration;
     }
