@@ -24,6 +24,9 @@ public class PasswordResetToken extends AbstractEntity implements Serializable {
     @Column(name = "expiry_date")
     private LocalDateTime expiryDate;
 
+    public PasswordResetToken() {
+    }
+
     public PasswordResetToken(String ssn) {
         super(ssn);
     }

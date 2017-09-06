@@ -31,6 +31,8 @@ public class File extends AbstractEntity implements Serializable {
     // endregion
 
     // region Constructors
+    public File() {
+    }
 
     public File(String ssn) {
         super(ssn);

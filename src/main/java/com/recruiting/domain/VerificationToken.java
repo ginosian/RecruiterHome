@@ -26,6 +26,8 @@ public class VerificationToken extends AbstractEntity implements Serializable {
 
 
     // standard constructors, getters and setters
+    public VerificationToken() {
+    }
 
     public VerificationToken(String ssn) {
         super(ssn);

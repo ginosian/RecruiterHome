@@ -30,6 +30,9 @@ public class CompanyStaff extends AbstractEntity implements Serializable {
     // endregion
 
     // region Constructors
+    public CompanyStaff() {
+    }
+
     public CompanyStaff(String ssn) {
         super(ssn);
     }

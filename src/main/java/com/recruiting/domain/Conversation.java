@@ -42,6 +42,8 @@ public class Conversation extends AbstractEntity implements Serializable {
     // endregion
 
     // region Constructors
+    public Conversation() {
+    }
 
     public Conversation(String ssn) {
         super(ssn);

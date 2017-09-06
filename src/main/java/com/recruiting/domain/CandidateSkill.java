@@ -22,6 +22,8 @@ public class CandidateSkill extends AbstractEntity implements Serializable {
     // endregion
 
     // region Constructors
+    public CandidateSkill() {
+    }
 
     public CandidateSkill(String ssn) {
         super(ssn);

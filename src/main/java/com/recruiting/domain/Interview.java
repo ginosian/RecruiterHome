@@ -45,7 +45,8 @@ public class Interview extends AbstractEntity implements Serializable { //TODO  
     // endregion
 
     // region Constructors
-
+    public Interview() {
+    }
 
     public Interview(String ssn) {
         super(ssn);

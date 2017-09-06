@@ -19,6 +19,9 @@ public class State extends AbstractTitledEntity implements Serializable, Titled 
     // endregion
 
     // region Constructors
+    public State() {
+    }
+
 
     public State(String ssn) {
         super(ssn);

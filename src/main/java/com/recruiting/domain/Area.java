@@ -13,6 +13,9 @@ public class Area extends AbstractTitledEntity implements Serializable {
 
 
     // region Constructors
+    public Area() {
+    }
+
     public Area(String ssn, String title) {
         super(ssn, title);
     }

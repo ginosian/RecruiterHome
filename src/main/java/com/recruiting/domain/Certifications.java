@@ -12,6 +12,8 @@ import java.io.Serializable;
 public class Certifications extends AbstractTitledEntity implements Serializable {
 
     // region Constructors
+    public Certifications() {
+    }
 
     public Certifications(String ssn) {
         super(ssn);
